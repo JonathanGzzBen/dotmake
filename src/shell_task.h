@@ -23,6 +23,7 @@ class ShellTask: public Task {
             for(const auto& command: commands) {
                 if (std::system(command.c_str())) {
                     std::cout << "Error in command: " << command << "\n";
+                    return false;
                 }
             }
             return true;

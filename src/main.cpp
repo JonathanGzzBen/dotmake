@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
   }
 
   std::vector<std::shared_ptr<Task>> tasks;
-  std::vector<std::string> commands{"ls", "lss -la"};
+  std::vector<std::string> commands{"ls", "lss -la", "echo End"};
   tasks.emplace_back(std::make_shared<ShellTask>(commands));
 
   for (const auto& task: tasks) {
