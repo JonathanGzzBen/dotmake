@@ -5,7 +5,11 @@
 #include <string>
 #include <thread>
 #include <vector>
+
 #include "src/shell_task.h"
+#include "src/shell_task_parser.h"
+#include "src/specification.h"
+#include "src/specification_parser.h"
 #include "src/task.h"
 
 bool handle_help(int argc, char *argv[]) {
@@ -31,12 +35,10 @@ int main(int argc, char *argv[]) {
     return 0;
   }
 
-  std::vector<std::shared_ptr<Task>> tasks;
-  std::vector<std::string> commands{"ls", "lss -la", "echo End"};
-  tasks.emplace_back(std::make_shared<ShellTask>(commands));
+  auto spec = SpecificationParser{}.parse_file("test.yaml");
 
-  for (const auto& task: tasks) {
-      task->run();
+  for (const auto &task : spec.get_tasks()) {
+    task.second->run();
   }
 
   return 0;
