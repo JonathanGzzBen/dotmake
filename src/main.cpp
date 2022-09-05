@@ -13,13 +13,13 @@
 #include "src/task.h"
 
 bool handle_help(int argc, char *argv[]) {
-  if (argc == 1) {
-    std::cout << "usage: dotmake [-h | --help] FILE... TASK\n";
+  if (argc < 3) {
+    std::cout << "usage: dotmake [-h | --help] FILE TASK\n";
     return true;
   }
   for (int i{0}; i < argc; i++) {
     if (strncmp(argv[i], "--help", 6) == 0) {
-      std::cout << "usage: dotmake [-h | --help] FILE... TASK\n";
+      std::cout << "usage: dotmake [-h | --help] FILE TASK\n";
       return true;
     }
     if (strncmp(argv[i], "-h", 2) == 0) {
@@ -34,12 +34,18 @@ int main(int argc, char *argv[]) {
   if (handle_help(argc, argv)) {
     return 0;
   }
+  const std::string filename{argv[1]};
+  const std::string name_task_to_run{argv[2]};
 
   auto spec = SpecificationParser{}.parse_file("test.yaml");
 
-  for (const auto &task : spec.get_tasks()) {
-    task.second->run();
+  const auto &task_to_run = spec.get_tasks()[name_task_to_run];
+  if (task_to_run == nullptr) {
+    std::cout << "There is no task with name \"" << name_task_to_run
+              << "\"  in specification file\n";
+    return 1;
   }
 
+  task_to_run->run();
   return 0;
 }
