@@ -14,7 +14,7 @@
 
 class TaskParser {
  public:
-    virtual ~TaskParser() = default;
+  virtual ~TaskParser() = default;
   virtual ShellTask parse_file(std::string filename) = 0;
   virtual ShellTask parse_string(std::string string) = 0;
 };

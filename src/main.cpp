@@ -37,15 +37,14 @@ int main(int argc, char *argv[]) {
   const std::string filename{argv[1]};
   const std::string name_task_to_run{argv[2]};
 
-  auto spec = SpecificationParser{}.parse_file("test.yaml");
+  const auto spec_tasks =
+      SpecificationParser{}.parse_file("test.yaml").get_tasks();
 
-  const auto &task_to_run = spec.get_tasks()[name_task_to_run];
-  if (task_to_run == nullptr) {
+  if (spec_tasks.find(name_task_to_run) == spec_tasks.cend()) {
     std::cout << "There is no task with name \"" << name_task_to_run
               << "\"  in specification file\n";
     return 1;
   }
-
-  task_to_run->run();
+  spec_tasks.at(name_task_to_run)->run();
   return 0;
 }
