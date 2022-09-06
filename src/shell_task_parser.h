@@ -14,7 +14,7 @@
 #include "yaml-cpp/node/parse.h"
 #include "yaml-cpp/yaml.h"
 
-class ShellTaskParser : public TaskParser {
+class ShellTaskParser : public Parser<ShellTask> {
  private:
   std::string name;
 
@@ -37,7 +37,7 @@ class ShellTaskParser : public TaskParser {
       const auto value = it->second;
 
       if (key.as<std::string>() == "commands" && value.IsSequence()) {
-        for (auto command : value) {
+        for (const auto& command : value) {
           commands.emplace_back(command.as<std::string>());
         }
       }
