@@ -5,6 +5,8 @@
 #include <memory>
 #include <string>
 
+#include "src/link_task.h"
+#include "src/link_task_parser.h"
 #include "src/shell_task.h"
 #include "src/shell_task_parser.h"
 #include "src/specification.h"
@@ -36,6 +38,11 @@ class SpecificationParser {
               sub_value.as<std::string>() == "shell") {
             specification.push_task(std::make_shared<ShellTask>(
                 ShellTaskParser{key.as<std::string>()}.parse_node(value)));
+          }
+          else if (sub_key.as<std::string>() == "type" &&
+              sub_value.as<std::string>() == "link") {
+            specification.push_task(std::make_shared<LinkTask>(
+                LinkTaskParser{key.as<std::string>()}.parse_node(value)));
           }
         }
       }
