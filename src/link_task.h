@@ -27,11 +27,11 @@ class LinkTask : public Task {
   virtual bool run() override {
     this->run_requirements();
     for (const auto& link : links) {
-        std::cout << "ln -sv " << link.first << " " << link.second << "\n";
-      //if (std::system(command.c_str())) {
-        //std::cout << "Error in command: " << command << "\n";
-        //return false;
-      //}
+      std::string command{"ln -sv " + link.second + " " + link.first};
+      if (std::system(command.c_str())) {
+        std::cout << "Error in command: " << command << "\n";
+        return false;
+      }
     }
     return true;
   }
