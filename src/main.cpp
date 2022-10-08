@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
   const std::string name_task_to_run{argv[2]};
 
   const auto spec_tasks =
-      SpecificationParser{}.parse_file("test.yaml").get_tasks();
+      SpecificationParser{}.parse_file(filename).get_tasks();
 
   if (spec_tasks.find(name_task_to_run) == spec_tasks.cend()) {
     std::cout << "There is no task with name \"" << name_task_to_run

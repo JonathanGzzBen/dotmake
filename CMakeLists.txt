@@ -4,6 +4,7 @@ project(dotmake)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 add_executable(${PROJECT_NAME} src/main.cpp)
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 
 include(FetchContent)
 FetchContent_Declare(
