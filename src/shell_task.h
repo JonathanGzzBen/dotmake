@@ -23,7 +23,11 @@ class ShellTask : public Task {
   virtual bool run() override {
     this->run_requirements();
     for (const auto& command : commands) {
+#ifdef WIN32
+      if (std::system(std::string("powershell " + command).c_str())) {
+#else
       if (std::system(command.c_str())) {
+#endif
         std::cout << "Error in command: " << command << "\n";
         return false;
       }
