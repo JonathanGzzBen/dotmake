@@ -16,12 +16,15 @@ class ShellTask : public Task {
  public:
   ShellTask(std::string name, std::vector<std::string> commands)
       : Task{name}, commands{commands} {}
-  ShellTask(std::string name, std::vector<std::shared_ptr<Task>> requirements)
-      : Task{name, requirements} {}
+  ShellTask(std::string name, std::vector<std::string> commands,
+            std::vector<std::string> required_task_names)
+      : Task{name, required_task_names}, commands{commands} {}
+
   virtual ~ShellTask() = default;
 
-  virtual bool run() override {
-    this->run_requirements();
+  virtual bool run(
+      std::map<std::string, std::shared_ptr<Task>> tasks) override {
+    this->run_requirements(tasks);
     for (const auto& command : commands) {
 #ifdef WIN32
       if (std::system(std::string("powershell " + command).c_str())) {

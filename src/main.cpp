@@ -45,6 +45,6 @@ int main(int argc, char *argv[]) {
               << "\"  in specification file\n";
     return 1;
   }
-  spec_tasks.at(name_task_to_run)->run();
+  spec_tasks.at(name_task_to_run)->run(spec_tasks);
   return 0;
 }
