@@ -8,16 +8,22 @@
 #include "src/task.h"
 
 class Specification {
+  friend class SpecificationParser;
+
  private:
   std::map<std::string, std::shared_ptr<Task>> tasks;
 
  public:
   Specification() = default;
 
-  void push_task(std::shared_ptr<Task> task) { tasks[task->get_name()] = task; }
-
-  inline std::map<std::string, std::shared_ptr<Task>> get_tasks() const {
-    return tasks;
+  [[nodiscard]] bool run(const std::string& task_name) const {
+    if (tasks.find(task_name) == tasks.cend()) {
+      std::cout << "There is no task with name \"" << task_name
+                << "\"  in specification file\n";
+      return false;
+    }
+    tasks.at(task_name)->run(tasks);
+    return true;
   }
 };
 

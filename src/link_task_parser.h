@@ -11,28 +11,24 @@
 #include "src/link_task.h"
 #include "src/shell_task.h"
 #include "src/task.h"
-#include "src/task_parser.h"
+#include "src/yaml-parser.h"
 #include "yaml-cpp/node/node.h"
 #include "yaml-cpp/node/parse.h"
 #include "yaml-cpp/yaml.h"
 
-class LinkTaskParser : public Parser<LinkTask> {
+class LinkTaskParser : public YamlParser<LinkTask> {
  private:
   std::string name;
 
  public:
-  LinkTaskParser(std::string name) : name{name} {}
-  virtual ~LinkTaskParser() = default;
+  explicit LinkTaskParser(std::string name) : name{name} {}
+  ~LinkTaskParser() override = default;
 
   LinkTask parse_file(std::string filename) override {
     return parse_node(YAML::LoadFile(filename));
   }
 
-  LinkTask parse_string(std::string string) override {
-    return parse_node(YAML::Load(string));
-  }
-
-  LinkTask parse_node(const YAML::Node& node) {
+  LinkTask parse_node(const YAML::Node& node) override {
     std::vector<std::pair<std::string, std::string>> links;
     for (YAML::const_iterator it = node.begin(); it != node.end(); ++it) {
       const auto key = it->first;

@@ -13,10 +13,10 @@
 #include "yaml-cpp/yaml.h"
 
 template <typename T>
-class Parser {
+class YamlParser {
  public:
-  virtual ~Parser() = default;
+  virtual ~YamlParser() = default;
   virtual T parse_file(std::string filename) = 0;
-  virtual T parse_string(std::string string) = 0;
+  virtual T parse_node(const YAML::Node& node) = 0;
 };
 #endif  //  TASK_PARSER_H

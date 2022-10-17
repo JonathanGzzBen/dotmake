@@ -9,28 +9,24 @@
 
 #include "src/shell_task.h"
 #include "src/task.h"
-#include "src/task_parser.h"
+#include "src/yaml-parser.h"
 #include "yaml-cpp/node/node.h"
 #include "yaml-cpp/node/parse.h"
 #include "yaml-cpp/yaml.h"
 
-class ShellTaskParser : public Parser<ShellTask> {
+class ShellTaskParser : public YamlParser<ShellTask> {
  private:
   std::string name;
 
  public:
-  ShellTaskParser(std::string name) : name{name} {}
-  virtual ~ShellTaskParser() = default;
+  explicit ShellTaskParser(std::string name) : name{name} {}
+  ~ShellTaskParser() override = default;
 
   ShellTask parse_file(std::string filename) override {
     return parse_node(YAML::LoadFile(filename));
   }
 
-  ShellTask parse_string(std::string string) override {
-    return parse_node(YAML::Load(string));
-  }
-
-  ShellTask parse_node(const YAML::Node& node) {
+  ShellTask parse_node(const YAML::Node& node) override {
     std::vector<std::string> commands;
     std::vector<std::string> required_task_names;
     for (YAML::const_iterator it = node.begin(); it != node.end(); ++it) {
