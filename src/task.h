@@ -7,6 +7,8 @@
 #include <vector>
 
 class Task {
+  friend class Specification;
+
  protected:
   std::vector<std::string> required_task_names;
   std::string name;
@@ -17,7 +19,7 @@ class Task {
 
   bool run_requirements(std::map<std::string, std::shared_ptr<Task>> tasks) {
     for (const auto& task_name : required_task_names) {
-      if (!tasks.find(task_name)->second->run(tasks)) {
+      if (!tasks.find(task_name)->second->run()) {
         return false;
       }
     }
@@ -27,7 +29,7 @@ class Task {
  public:
   virtual ~Task() = default;
 
-  virtual bool run(std::map<std::string, std::shared_ptr<Task>> tasks) = 0;
+  virtual bool run() = 0;
 
   virtual inline std::string get_name() { return name; }
 };

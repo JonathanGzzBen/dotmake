@@ -22,9 +22,7 @@ class ShellTask : public Task {
 
   virtual ~ShellTask() = default;
 
-  virtual bool run(
-      std::map<std::string, std::shared_ptr<Task>> tasks) override {
-    this->run_requirements(tasks);
+  virtual bool run() override {
     for (const auto& command : commands) {
 #ifdef WIN32
       if (std::system(std::string("powershell " + command).c_str())) {

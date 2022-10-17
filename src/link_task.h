@@ -24,9 +24,7 @@ class LinkTask : public Task {
       : Task{name}, links{links} {}
   virtual ~LinkTask() = default;
 
-  virtual bool run(
-      std::map<std::string, std::shared_ptr<Task>> tasks) override {
-    this->run_requirements(tasks);
+  virtual bool run() override {
     for (const auto& link : links) {
 #ifdef WIN32
       std::filesystem::path file_path(link.second.c_str());
