@@ -1,6 +1,11 @@
 #ifndef SPECIFICATION_H
 #define SPECIFICATION_H
 
+/**
+ * @file specification.h
+ * @brief Specification class
+ */
+
 #include <map>
 #include <memory>
 #include <stack>
@@ -9,10 +14,10 @@
 #include "src/task.h"
 
 /**
- * @class Specification
  * @brief Holds data of tasks specified in one or more specification files.
  *
- * Can run all needed tasks to fulfill a single task.
+ * Used to run an specific task and ensuring its dependencies are executed in
+ * order.
  */
 class Specification {
   friend class SpecificationParser;
@@ -29,7 +34,8 @@ class Specification {
    * sorted in result_sorted_tasks
    * @param result_sorted_tasks stack of tasks sorted in order
    * to run task with task_name
-   * @return Whether tasks could be sorted or not (cyclic dependency)
+   * @retval true if tasks could be sorted successfully
+   * @retval false if sorting failed (cyclic o missing dependencies)
    */
   static bool recursive_tasks_fill(
       const std::string& task_name,

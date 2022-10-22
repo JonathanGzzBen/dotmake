@@ -1,6 +1,11 @@
 #ifndef SHELL_TASK_PARSER_H
 #define SHELL_TASK_PARSER_H
 
+/**
+ * @file shell_task_parser.h
+ * @brief ShellTaskParser class
+ */
+
 #include <cstdlib>
 #include <iostream>
 #include <memory>
@@ -17,7 +22,7 @@
 /**
  * @class ShellTaskParser
  *
- * @brief YamlParser for ShellTask
+ * @brief YamlParser implementation for ShellTask
  */
 class ShellTaskParser : public YamlParser<ShellTask> {
  private:

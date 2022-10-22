@@ -1,6 +1,11 @@
 #ifndef SPECIFICATION_PARSER_H
 #define SPECIFICATION_PARSER_H
 
+/**
+ * @file specification_parser.h
+ * @brief SpecificationParser class
+ */
+
 #include <map>
 #include <memory>
 #include <string>
@@ -13,6 +18,10 @@
 #include "src/task.h"
 #include "yaml-cpp/yaml.h"
 
+/**
+ * @class SpecificationParser
+ * @brief YamlParser for Specification
+ */
 class SpecificationParser : public YamlParser<Specification> {
  private:
   std::map<std::string, Task*> tasks;
