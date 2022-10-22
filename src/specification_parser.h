@@ -13,19 +13,21 @@
 #include "src/task.h"
 #include "yaml-cpp/yaml.h"
 
-class SpecificationParser {
+class SpecificationParser : public YamlParser<Specification> {
  private:
   std::map<std::string, Task*> tasks;
 
  public:
   SpecificationParser() = default;
+  ~SpecificationParser() override = default;
 
-  Specification parse_file(const std::string& filename) {
+  Specification parse_file(std::string filename) override {
+    return parse_node(YAML::LoadFile(filename));
+  }
+
+  Specification parse_node(const YAML::Node& node) override {
     Specification specification{};
-
-    const auto specification_file = YAML::LoadFile(filename);
-
-    for (const auto object : specification_file) {
+    for (const auto object : node) {
       const auto key = object.first;
       const auto value = object.second;
 
@@ -33,21 +35,21 @@ class SpecificationParser {
         for (const auto sub_object : value) {
           const auto sub_key = sub_object.first;
           const auto sub_value = sub_object.second;
-
-          if (sub_key.as<std::string>() == "type" &&
-              sub_value.as<std::string>() == "shell") {
-            specification.push_task(std::make_shared<ShellTask>(
-                ShellTaskParser{key.as<std::string>()}.parse_node(value)));
-          }
-          else if (sub_key.as<std::string>() == "type" &&
-              sub_value.as<std::string>() == "link") {
-            specification.push_task(std::make_shared<LinkTask>(
-                LinkTaskParser{key.as<std::string>()}.parse_node(value)));
+          // If it is a task
+          if (sub_key.as<std::string>() == "type") {
+            const auto task_type = sub_value.as<std::string>();
+            const auto task_name = key.as<std::string>();
+            if (task_type == "shell") {
+              specification.tasks[task_name] = std::make_shared<ShellTask>(
+                  ShellTaskParser{task_name}.parse_node(value));
+            } else if (task_type == "link") {
+              specification.tasks[task_name] = std::make_shared<LinkTask>(
+                  LinkTaskParser{task_name}.parse_node(value));
+            }
           }
         }
       }
     }
-
     return specification;
   }
 };

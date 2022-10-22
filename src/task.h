@@ -1,35 +1,42 @@
 #ifndef TASK_H
 #define TASK_H
 
+#include <map>
 #include <memory>
 #include <string>
 #include <vector>
 
+/** @class Task
+ * @brief A runnable task
+ *
+ * A task can be of multiple types: shell, link...
+ * It can be run either individually or using an Specification
+ *
+ */
 class Task {
+  friend class Specification;
+
  protected:
-  std::vector<std::shared_ptr<Task>> requirements;
+  std::vector<std::string> required_task_names;
   std::string name;
 
   Task(std::string name) : name{name} {};
-  Task(std::string name, std::vector<std::shared_ptr<Task>> requirements)
-      : name{name}, requirements{requirements} {};
-
-  bool run_requirements() {
-    for (const auto& task : requirements) {
-      if (!task->run()) {
-        return false;
-      }
-    }
-    return true;
-  }
+  Task(std::string name, std::vector<std::string> required_task_names)
+      : name{name}, required_task_names{required_task_names} {};
 
  public:
   virtual ~Task() = default;
 
-  virtual bool run() = 0;
+  /**
+   * @brief Runs task
+   * @return If the task was run succesfully
+   */
+  [[nodiscard]] virtual bool run() = 0;
 
-  virtual inline std::string get_name() {
-      return name;
-  }
+  /**
+   * @brief Gets the name of the task
+   * @return name of task
+   */
+  virtual inline std::string get_name() { return name; }
 };
 #endif  //  TASK_H
