@@ -22,14 +22,9 @@ class LinkTask : public Task {
   LinkTask(std::string name,
            std::vector<std::pair<std::string, std::string>> links)
       : Task{name}, links{links} {}
-  LinkTask(std::string name,
-           std::vector<std::pair<std::string, std::string>> links,
-           std::vector<std::shared_ptr<Task>> requirements)
-      : Task{name, requirements}, links{links} {}
   virtual ~LinkTask() = default;
 
   virtual bool run() override {
-    this->run_requirements();
     for (const auto& link : links) {
 #ifdef WIN32
       std::filesystem::path file_path(link.second.c_str());

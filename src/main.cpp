@@ -1,16 +1,9 @@
-#include <string.h>
-
 #include <iostream>
-#include <memory>
 #include <string>
 #include <thread>
 #include <vector>
 
-#include "src/shell_task.h"
-#include "src/shell_task_parser.h"
-#include "src/specification.h"
 #include "src/specification_parser.h"
-#include "src/task.h"
 
 bool handle_help(int argc, char *argv[]) {
   if (argc < 3) {
@@ -37,14 +30,9 @@ int main(int argc, char *argv[]) {
   const std::string filename{argv[1]};
   const std::string name_task_to_run{argv[2]};
 
-  const auto spec_tasks =
-      SpecificationParser{}.parse_file(filename).get_tasks();
-
-  if (spec_tasks.find(name_task_to_run) == spec_tasks.cend()) {
-    std::cout << "There is no task with name \"" << name_task_to_run
-              << "\"  in specification file\n";
-    return 1;
+  if (!SpecificationParser{}.parse_file(filename).run(name_task_to_run)) {
+    std::cerr << "Could not run task \"" << name_task_to_run << "\"\n";
+    exit(EXIT_FAILURE);
   }
-  spec_tasks.at(name_task_to_run)->run();
   return 0;
 }

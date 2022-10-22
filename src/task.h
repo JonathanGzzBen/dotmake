@@ -1,22 +1,25 @@
 #ifndef TASK_H
 #define TASK_H
 
+#include <map>
 #include <memory>
 #include <string>
 #include <vector>
 
 class Task {
+  friend class Specification;
+
  protected:
-  std::vector<std::shared_ptr<Task>> requirements;
+  std::vector<std::string> required_task_names;
   std::string name;
 
   Task(std::string name) : name{name} {};
-  Task(std::string name, std::vector<std::shared_ptr<Task>> requirements)
-      : name{name}, requirements{requirements} {};
+  Task(std::string name, std::vector<std::string> required_task_names)
+      : name{name}, required_task_names{required_task_names} {};
 
-  bool run_requirements() {
-    for (const auto& task : requirements) {
-      if (!task->run()) {
+  bool run_requirements(std::map<std::string, std::shared_ptr<Task>> tasks) {
+    for (const auto& task_name : required_task_names) {
+      if (!tasks.find(task_name)->second->run()) {
         return false;
       }
     }
@@ -28,8 +31,6 @@ class Task {
 
   virtual bool run() = 0;
 
-  virtual inline std::string get_name() {
-      return name;
-  }
+  virtual inline std::string get_name() { return name; }
 };
 #endif  //  TASK_H
