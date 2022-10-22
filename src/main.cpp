@@ -11,12 +11,8 @@ bool handle_help(int argc, char *argv[]) {
     return true;
   }
   for (int i{0}; i < argc; i++) {
-    if (strncmp(argv[i], "--help", 6) == 0) {
+    if (strncmp(argv[i], "--help", 6) == 0 || strncmp(argv[i], "-h", 2) == 0) {
       std::cout << "usage: dotmake [-h | --help] FILE TASK\n";
-      return true;
-    }
-    if (strncmp(argv[i], "-h", 2) == 0) {
-      std::cout << "Print help\n";
       return true;
     }
   }
