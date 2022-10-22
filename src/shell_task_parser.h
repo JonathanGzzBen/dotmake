@@ -14,6 +14,11 @@
 #include "yaml-cpp/node/parse.h"
 #include "yaml-cpp/yaml.h"
 
+/**
+ * @class ShellTaskParser
+ *
+ * @brief YamlParser for ShellTask
+ */
 class ShellTaskParser : public YamlParser<ShellTask> {
  private:
   std::string name;

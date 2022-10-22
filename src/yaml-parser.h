@@ -16,7 +16,19 @@ template <typename T>
 class YamlParser {
  public:
   virtual ~YamlParser() = default;
+
+  /**
+   * @brief parses a file
+   * @param filename filename of file to parse
+   * @return Object parsed from file
+   */
   virtual T parse_file(std::string filename) = 0;
+
+  /**
+   * @brief parses a file
+   * @param node YAML node to parse
+   * @return Object parsed from YAML node
+   */
   virtual T parse_node(const YAML::Node& node) = 0;
 };
 #endif  //  TASK_PARSER_H

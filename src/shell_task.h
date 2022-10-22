@@ -9,6 +9,11 @@
 
 #include "src/task.h"
 
+/**
+ * @class ShellTask
+ *
+ * @brief A task that runs shell commands
+ */
 class ShellTask : public Task {
  private:
   std::vector<std::string> commands;

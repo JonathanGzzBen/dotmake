@@ -14,6 +14,11 @@
 #include <filesystem>
 #endif
 
+/**
+ * @class LinkTask
+ *
+ * @brief A task that creates symbolic links
+ */
 class LinkTask : public Task {
  private:
   std::vector<std::pair<std::string, std::string>> links;

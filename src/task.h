@@ -6,6 +6,13 @@
 #include <string>
 #include <vector>
 
+/** @class Task
+ * @brief A runnable task
+ *
+ * A task can be of multiple types: shell, link...
+ * It can be run either individually or using an Specification
+ *
+ */
 class Task {
   friend class Specification;
 
@@ -17,20 +24,19 @@ class Task {
   Task(std::string name, std::vector<std::string> required_task_names)
       : name{name}, required_task_names{required_task_names} {};
 
-  bool run_requirements(std::map<std::string, std::shared_ptr<Task>> tasks) {
-    for (const auto& task_name : required_task_names) {
-      if (!tasks.find(task_name)->second->run()) {
-        return false;
-      }
-    }
-    return true;
-  }
-
  public:
   virtual ~Task() = default;
 
-  virtual bool run() = 0;
+  /**
+   * @brief Runs task
+   * @return If the task was run succesfully
+   */
+  [[nodiscard]] virtual bool run() = 0;
 
+  /**
+   * @brief Gets the name of the task
+   * @return name of task
+   */
   virtual inline std::string get_name() { return name; }
 };
 #endif  //  TASK_H

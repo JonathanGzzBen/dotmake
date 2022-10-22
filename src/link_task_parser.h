@@ -16,6 +16,11 @@
 #include "yaml-cpp/node/parse.h"
 #include "yaml-cpp/yaml.h"
 
+/**
+ * @class LinkTaskParser
+ *
+ * @brief YamlParser for LinkTask
+ */
 class LinkTaskParser : public YamlParser<LinkTask> {
  private:
   std::string name;
