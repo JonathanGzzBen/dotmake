@@ -1,6 +1,11 @@
 #ifndef TASK_PARSER_H
 #define TASK_PARSER_H
 
+/**
+ * @file yaml-parser.h
+ * @brief YamlParser class
+ */
+
 #include <cstdlib>
 #include <iostream>
 #include <memory>
@@ -12,6 +17,10 @@
 #include "yaml-cpp/node/node.h"
 #include "yaml-cpp/yaml.h"
 
+/**
+ * @brief Yaml Parser
+ * @tparam T type that should be parsed
+ */
 template <typename T>
 class YamlParser {
  public:

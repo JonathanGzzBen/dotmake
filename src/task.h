@@ -1,16 +1,24 @@
 #ifndef TASK_H
 #define TASK_H
 
+/**
+ * @file task.h
+ * @brief Task abstract class
+ */
+
 #include <map>
 #include <memory>
 #include <string>
 #include <vector>
 
-/** @class Task
+/**
+ * @class Task
  * @brief A runnable task
  *
- * A task can be of multiple types: shell, link...
- * It can be run either individually or using an Specification
+ * A task can be of one of the following types: shell, link.
+ *
+ * It can be run either individually (without verifying dependencies) or using
+ * an Specification class which can manage dependencies.
  *
  */
 class Task {
@@ -29,7 +37,8 @@ class Task {
 
   /**
    * @brief Runs task
-   * @return If the task was run succesfully
+   * @retval true if task was sun successfully
+   * @retval false if task failed
    */
   [[nodiscard]] virtual bool run() = 0;
 

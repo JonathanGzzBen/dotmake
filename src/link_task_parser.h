@@ -1,6 +1,11 @@
 #ifndef LINK_TASK_PARSER_H
 #define LINK_TASK_PARSER_H
 
+/**
+ * @file link_task_parser.h
+ * @brief LinkTaskParser class
+ */
+
 #include <cstdlib>
 #include <iostream>
 #include <memory>
@@ -18,8 +23,7 @@
 
 /**
  * @class LinkTaskParser
- *
- * @brief YamlParser for LinkTask
+ * @brief YamlParser implementation for LinkTask
  */
 class LinkTaskParser : public YamlParser<LinkTask> {
  private:
