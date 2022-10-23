@@ -1,6 +1,11 @@
 #ifndef SHELL_TASK_H
 #define SHELL_TASK_H
 
+/**
+ * @file shell_task.h
+ * @brief ShellTask class
+ */
+
 #include <cstdlib>
 #include <iostream>
 #include <memory>

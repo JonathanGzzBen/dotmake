@@ -1,6 +1,11 @@
 #ifndef LINK_TASK_H
 #define LINK_TASK_H
 
+/**
+ * @file link_task.h
+ * @brief LinkTask class
+ */
+
 #include <cstdlib>
 #include <iostream>
 #include <map>
