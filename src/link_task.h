@@ -35,23 +35,21 @@ class LinkTask : public Task {
   virtual ~LinkTask() = default;
 
   virtual bool run() override {
-    std::cout << "Running task ====>" << name << "\n";
     for (const auto& link : links) {
-      // #ifdef WIN32
-      //       std::filesystem::path file_path(link.second.c_str());
-      //       std::string command =
-      //           "cmd /c mklink " +
-      //           std::string(std::filesystem::is_directory(file_path) ? "/D "
-      //           : " ") + link.first + " " + link.second;
-      // #else
-      //       std::string command{"ln -sv \"" + std::string{"$PWD/"} +
-      //       link.second +
-      //                           "\" " + link.first};
-      // #endif
-      //       if (std::system(command.c_str())) {
-      //         std::cout << "Error in command: " << command << "\n";
-      //         return false;
-      //       }
+#ifdef WIN32
+      std::filesystem::path file_path(link.second.c_str());
+      std::string command =
+          "cmd /c mklink " +
+          std::string(std::filesystem::is_directory(file_path) ? "/D " : " ") +
+          link.first + " " + link.second;
+#else
+      std::string command{"ln -sv \"" + std::string{"$PWD/"} + link.second +
+                          "\" " + link.first};
+#endif
+      if (std::system(command.c_str())) {
+        std::cout << "Error in command: " << command << "\n";
+        return false;
+      }
     }
     return true;
   }
