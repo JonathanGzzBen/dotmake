@@ -85,6 +85,7 @@ link_task_1:
  */
 
 #include <iostream>
+#include <cstring>
 #include <string>
 #include <thread>
 #include <vector>
