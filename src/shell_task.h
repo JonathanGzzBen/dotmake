@@ -33,15 +33,17 @@ class ShellTask : public Task {
   virtual ~ShellTask() = default;
 
   virtual bool run() override {
+    std::cout << "Running task ====>" << get_name() << "\n";
     for (const auto& command : commands) {
-#ifdef WIN32
-      if (std::system(std::string("powershell " + command).c_str())) {
-#else
-      if (std::system(command.c_str())) {
-#endif
-        std::cout << "Error in command: " << command << "\n";
-        return false;
-      }
+      std::cout << command << "\n";
+      // #ifdef WIN32
+      //       if (std::system(std::string("powershell " + command).c_str())) {
+      // #else
+      //       if (std::system(command.c_str())) {
+      // #endif
+      //         std::cout << "Error in command: " << command << "\n";
+      //         return false;
+      //       }
     }
     return true;
   }

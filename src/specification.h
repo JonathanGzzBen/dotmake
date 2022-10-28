@@ -8,7 +8,7 @@
 
 #include <map>
 #include <memory>
-#include <stack>
+#include <queue>
 #include <string>
 
 #include "src/task.h"
@@ -41,18 +41,19 @@ class Specification {
       const std::string& task_name,
       const std::map<std::string, std::shared_ptr<Task>> tasks,
       std::set<std::string>& processed_tasks,
-      std::stack<std::string>& result_sorted_tasks) {
-    if (processed_tasks.find(task_name) != processed_tasks.cend()) {
-      return true;
-    }
-    result_sorted_tasks.push(task_name);
-    processed_tasks.insert(task_name);
+      std::queue<std::string>& result_queued_tasks) {
     for (const auto& required_task : tasks.at(task_name)->required_task_names) {
+      if (processed_tasks.find(required_task) != processed_tasks.cend()) {
+        // If required task was already processed
+        continue;
+      }
       if (!recursive_tasks_fill(required_task, tasks, processed_tasks,
-                                result_sorted_tasks)) {
+                                result_queued_tasks)) {
         return false;
       }
     }
+    result_queued_tasks.push(task_name);
+    processed_tasks.insert(task_name);
     return true;
   }
 
@@ -72,17 +73,17 @@ class Specification {
       return false;
     }
 
-    std::stack<std::string> sorted_tasks;
+    std::queue<std::string> queued_tasks;
     std::set<std::string> processed_tasks;
     if (!recursive_tasks_fill(task_name, tasks, processed_tasks,
-                              sorted_tasks)) {
+                              queued_tasks)) {
       return false;
     }
-    while (!sorted_tasks.empty()) {
-      if (!tasks.at(sorted_tasks.top())->run()) {
+    while (!queued_tasks.empty()) {
+      if (!tasks.at(queued_tasks.front())->run()) {
         return false;
       }
-      sorted_tasks.pop();
+      queued_tasks.pop();
     }
 
     return true;
