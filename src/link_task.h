@@ -43,7 +43,8 @@ class LinkTask : public Task {
           std::string(std::filesystem::is_directory(file_path) ? "/D " : " ") +
           link.first + " " + link.second;
 #else
-      std::string command{"ln -sv \"" + std::string{"$PWD/"} + link.second + "\" " + link.first};
+      std::string command{"ln -sv \"" + std::string{"$PWD/"} + link.second +
+                          "\" " + link.first};
 #endif
       if (std::system(command.c_str())) {
         std::cout << "Error in command: " << command << "\n";

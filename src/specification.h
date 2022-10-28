@@ -43,9 +43,7 @@ class Specification {
       std::set<std::string>& processed_tasks,
       std::stack<std::string>& result_sorted_tasks) {
     if (processed_tasks.find(task_name) != processed_tasks.cend()) {
-      // Cyclic dependency found
-      std::cerr << "Cyclic dependency found in task \"" << task_name << "\"\n";
-      return false;
+      return true;
     }
     result_sorted_tasks.push(task_name);
     processed_tasks.insert(task_name);
