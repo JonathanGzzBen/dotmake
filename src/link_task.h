@@ -27,11 +27,12 @@
 class LinkTask : public Task {
  private:
   std::vector<std::pair<std::string, std::string>> links;
+  bool force;
 
  public:
   LinkTask(std::string name,
-           std::vector<std::pair<std::string, std::string>> links)
-      : Task{name}, links{links} {}
+           std::vector<std::pair<std::string, std::string>> links, bool force)
+      : Task{name}, links{links}, force{force} {}
   virtual ~LinkTask() = default;
 
   virtual bool run() override {
@@ -43,8 +44,9 @@ class LinkTask : public Task {
           std::string(std::filesystem::is_directory(file_path) ? "/D " : " ") +
           link.first + " " + link.second;
 #else
-      std::string command{"ln -sv \"" + std::string{"$PWD/"} + link.second +
-                          "\" " + link.first};
+      std::string command{
+          std::string{"ln "} + std::string{force ? "-svf" : "-sv"} +
+          std::string{" \"$PWD/"} + link.second + "\" " + link.first};
 #endif
       if (std::system(command.c_str())) {
         std::cout << "Error in command: " << command << "\n";

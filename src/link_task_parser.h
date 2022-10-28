@@ -29,6 +29,12 @@ class LinkTaskParser : public YamlParser<LinkTask> {
  private:
   std::string name;
 
+  std::string str_toupper(std::string str) {
+    std::transform(str.begin(), str.end(), str.begin(),
+                   [](unsigned char c) { return std::toupper(c); });
+    return str;
+  }
+
  public:
   explicit LinkTaskParser(std::string name) : name{name} {}
   ~LinkTaskParser() override = default;
@@ -39,6 +45,7 @@ class LinkTaskParser : public YamlParser<LinkTask> {
 
   LinkTask parse_node(const YAML::Node& node) override {
     std::vector<std::pair<std::string, std::string>> links;
+    bool force = false;
     for (YAML::const_iterator it = node.begin(); it != node.end(); ++it) {
       const auto key = it->first;
       const auto value = it->second;
@@ -48,9 +55,11 @@ class LinkTaskParser : public YamlParser<LinkTask> {
           links.emplace_back(link.first.as<std::string>(),
                              link.second.as<std::string>());
         }
+      } else if (key.as<std::string>() == "force" && value.IsScalar()) {
+        force = str_toupper(value.as<std::string>()) == "TRUE";
       }
     }
-    return LinkTask{name, links};
+    return LinkTask{name, links, force};
   }
 };
 #endif  //  LINK_TASK_PARSER_H
