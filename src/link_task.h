@@ -45,7 +45,7 @@ class LinkTask : public Task {
           link.first + " " + link.second;
 #else
       std::string command{
-          std::string{"ln "} + std::string{force ? "-svf" : "-sv"} +
+          std::string{"ln "} + std::string{force ? "-svnf" : "-snv"} +
           std::string{" \"$PWD/"} + link.second + "\" " + link.first};
 #endif
       if (std::system(command.c_str())) {
