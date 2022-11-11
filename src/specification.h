@@ -42,6 +42,7 @@ class Specification {
       const std::map<std::string, std::shared_ptr<Task>> tasks,
       std::set<std::string>& processed_tasks,
       std::queue<std::string>& result_queued_tasks) {
+    processed_tasks.insert(task_name);
     for (const auto& required_task : tasks.at(task_name)->required_task_names) {
       if (processed_tasks.find(required_task) != processed_tasks.cend()) {
         // If required task was already processed
@@ -53,7 +54,6 @@ class Specification {
       }
     }
     result_queued_tasks.push(task_name);
-    processed_tasks.insert(task_name);
     return true;
   }
 
