@@ -39,6 +39,10 @@ class LinkTaskParser : public YamlParser<LinkTask> {
   explicit LinkTaskParser(std::string name) : name{name} {}
   ~LinkTaskParser() override = default;
 
+  LinkTask parse_string(std::string str) override {
+    return parse_node(YAML::Load(str.c_str()));
+  }
+
   LinkTask parse_file(std::string filename) override {
     return parse_node(YAML::LoadFile(filename));
   }
@@ -58,6 +62,9 @@ class LinkTaskParser : public YamlParser<LinkTask> {
       } else if (key.as<std::string>() == "force" && value.IsScalar()) {
         force = str_toupper(value.as<std::string>()) == "TRUE";
       }
+    }
+    if (links.size() == 0) {
+      throw std::runtime_error{"Link task \"" + name + "\" has no links"};
     }
     return LinkTask{name, links, force};
   }

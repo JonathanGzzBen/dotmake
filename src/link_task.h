@@ -15,7 +15,7 @@
 
 #include "src/task.h"
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <filesystem>
 #endif
 
@@ -37,7 +37,7 @@ class LinkTask : public Task {
 
   virtual bool run() override {
     for (const auto& link : links) {
-#ifdef WIN32
+#ifdef _WIN32
       std::filesystem::path file_path(link.second.c_str());
       std::string command =
           "cmd /c mklink " +

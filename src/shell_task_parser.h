@@ -32,6 +32,10 @@ class ShellTaskParser : public YamlParser<ShellTask> {
   explicit ShellTaskParser(std::string name) : name{name} {}
   ~ShellTaskParser() override = default;
 
+  ShellTask parse_string(std::string str) override {
+    return parse_node(YAML::Load(str.c_str()));
+  }
+
   ShellTask parse_file(std::string filename) override {
     return parse_node(YAML::LoadFile(filename));
   }
@@ -52,6 +56,9 @@ class ShellTaskParser : public YamlParser<ShellTask> {
           required_task_names.push_back(task_name.as<std::string>());
         }
       }
+    }
+    if (commands.size() == 0) {
+      throw std::runtime_error{"Shell task \"" + name + "\" has no commands"};
     }
     return ShellTask{name, commands, required_task_names};
   }

@@ -27,6 +27,13 @@ class YamlParser {
   virtual ~YamlParser() = default;
 
   /**
+   * @brief parses a string
+   * @param filename yaml string to parse
+   * @return Object parsed from string
+   */
+  virtual T parse_string(std::string str) = 0;
+
+  /**
    * @brief parses a file
    * @param filename filename of file to parse
    * @return Object parsed from file

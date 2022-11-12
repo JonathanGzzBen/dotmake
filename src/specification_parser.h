@@ -30,6 +30,10 @@ class SpecificationParser : public YamlParser<Specification> {
   SpecificationParser() = default;
   ~SpecificationParser() override = default;
 
+  Specification parse_string(std::string str) override {
+    return parse_node(YAML::Load(str.c_str()));
+  }
+
   Specification parse_file(std::string filename) override {
     return parse_node(YAML::LoadFile(filename));
   }
