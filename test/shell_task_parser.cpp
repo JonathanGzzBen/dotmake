@@ -1,6 +1,11 @@
 #include <gtest/gtest.h>
 #include <shell_task_parser.h>
 
+#include "mock_system_caller.h"
+
+using ::testing::Exactly;
+using ::testing::Return;
+
 TEST(ShellTaskParser, ParseAndRunCorrect) {
   auto parsed_task = ShellTaskParser{"hello_task"}.parse_string(R"(
 
@@ -10,7 +15,15 @@ TEST(ShellTaskParser, ParseAndRunCorrect) {
 
   )");
 
-  ASSERT_TRUE(parsed_task.run());
+  MockSystemCaller mock_system_caller;
+
+  EXPECT_CALL(mock_system_caller, RunShellCommand("echo \"hello\""))
+      .Times(Exactly(1))
+      .WillOnce(Return(0));
+
+  auto test_task = ShellTask{parsed_task, mock_system_caller};
+
+  ASSERT_TRUE(test_task.run());
 }
 
 TEST(ShellTaskParser, ParseWithoutCommands) {

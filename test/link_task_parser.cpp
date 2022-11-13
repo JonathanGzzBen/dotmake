@@ -5,6 +5,11 @@
 
 #include <cstdlib>
 
+#include "mock_system_caller.h"
+
+using ::testing::Exactly;
+using ::testing::Return;
+
 TEST(GetLinkCommand, LinkFile) {
   EXPECT_EQ(get_link_command("link.txt", "target.txt"),
             "cmd /c mklink link.txt target.txt");
@@ -21,19 +26,28 @@ TEST(GetLinkCommand, LinkDirectory) {
   std::filesystem::remove("dirtolink");
 }
 
-TEST(LinkTaskParser, TryLinkingUnexistingFile) {
-  auto test_task = LinkTaskParser{"test_task"}.parse_string(R"(
+TEST(LinkTaskParser, LinkFileNoForce) {
+  auto parsed_task = LinkTaskParser{"test_task"}.parse_string(R"(
 
   type: link
   links:
-    some.txt: other.txt
+    link.txt: target.txt
 
   )");
 
-  ASSERT_FALSE(test_task.run());
+  MockSystemCaller mock_system_caller;
+
+  EXPECT_CALL(mock_system_caller,
+              CreateSymbolicLink("link.txt", "target.txt", false))
+      .Times(Exactly(1))
+      .WillOnce(Return(0));
+
+  auto test_task = LinkTask{parsed_task, mock_system_caller};
+
+  ASSERT_TRUE(test_task.run());
 }
 
-TEST(LinkTaskParser, ParseWithoutCommands) {
+TEST(LinkTaskParser, ParseWithoutLinks) {
   ASSERT_ANY_THROW(LinkTaskParser{"test_task"}.parse_string(R"(
 
   type: link

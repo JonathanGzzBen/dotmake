@@ -26,16 +26,25 @@ class LinkTask : public Task {
   std::vector<std::pair<std::string, std::string>> links;
   bool force;
 
+  SystemCaller& system_caller;
+
  public:
+  LinkTask(LinkTask& link_task,
+           SystemCaller& system_caller = SystemCaller::GetInstance())
+      : Task{link_task.name},
+        links{link_task.links},
+        force{link_task.force},
+        system_caller{system_caller} {}
   LinkTask(std::string name,
-           std::vector<std::pair<std::string, std::string>> links, bool force)
-      : Task{name}, links{links}, force{force} {}
+           std::vector<std::pair<std::string, std::string>> links, bool force,
+           SystemCaller& system_caller = SystemCaller::GetInstance())
+      : Task{name}, links{links}, force{force}, system_caller{system_caller} {}
+
   virtual ~LinkTask() = default;
 
   virtual bool run() override {
     for (const auto& link : links) {
-      if (SystemCaller::GetInstance().CreateSymbolicLink(link.first,
-                                                         link.second)) {
+      if (system_caller.CreateSymbolicLink(link.first, link.second)) {
         std::cout << "Error creating link \"" << link.first << "\"\n";
         return false;
       }

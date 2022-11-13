@@ -26,6 +26,11 @@ class ShellTask : public Task {
   SystemCaller& system_caller;
 
  public:
+  ShellTask(ShellTask& shell_task,
+            SystemCaller& system_caller = SystemCaller::GetInstance())
+      : Task{shell_task.name},
+        commands{shell_task.commands},
+        system_caller{system_caller} {}
   ShellTask(std::string name, std::vector<std::string> commands,
             SystemCaller& system_caller = SystemCaller::GetInstance())
       : Task{name}, commands{commands}, system_caller{system_caller} {}
@@ -40,14 +45,12 @@ class ShellTask : public Task {
 
   virtual bool run() override {
     for (const auto& command : commands) {
-      if (system_caller.RunShellCommand(command.c_str())) {
+      if (system_caller.RunShellCommand(command)) {
         std::cout << "Error in command: " << command << "\n";
         return false;
       }
     }
     return true;
   }
-
-  virtual std::vector<std::string> get_commands() const { return commands; }
 };
 #endif  //  SHELL_TASK_H

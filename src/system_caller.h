@@ -33,7 +33,7 @@ static inline std::string get_link_command(const std::string& link,
 }
 
 class SystemCaller {
- private:
+ protected:
   SystemCaller() = default;
 
  public:
@@ -47,8 +47,8 @@ class SystemCaller {
     return instance;
   }
 
-  virtual inline int RunShellCommand(const char* cmd) const {
-    return std::system((get_run_shell_command(cmd).c_str()));
+  virtual inline int RunShellCommand(const std::string& cmd) const {
+    return std::system((get_run_shell_command(cmd.c_str()).c_str()));
   }
 
   virtual inline int CreateSymbolicLink(const std::string& link,
