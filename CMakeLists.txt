@@ -22,7 +22,9 @@ FetchContent_Declare(
     GIT_TAG d572f4777349d43653b21d6c2fc63020ab326db2
 )
 
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+if(WIN32)
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+endif()
 
 FetchContent_MakeAvailable(yaml-cpp googletest googlebenchmark)
 
@@ -32,7 +34,16 @@ add_executable(${PROJECT_NAME} src/main.cpp)
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 target_link_libraries(${PROJECT_NAME} PRIVATE ${CoreLibraries})
 
-# enable_testing()
+
+# Benchmarking
+set(BenchmarkingProject ${CMAKE_PROJECT_NAME}_benchmark)
+add_executable(${BenchmarkingProject} benchmark/shell_task_parser.cpp benchmark/link_task_parser.cpp)
+set_property(TARGET ${BenchmarkingProject} PROPERTY CXX_STANDARD 17)
+target_include_directories(${BenchmarkingProject} PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_link_libraries(${BenchmarkingProject} ${CoreLibraries} benchmark::benchmark benchmark::benchmark_main)
+
+# Testing
+enable_testing()
 set(TestProject ${PROJECT_NAME}_test)
 add_executable(${TestProject} 
     test/shell_task_parser.cpp
@@ -40,6 +51,6 @@ add_executable(${TestProject}
 )
 set_property(TARGET ${TestProject} PROPERTY CXX_STANDARD 17)
 target_include_directories(${TestProject} PRIVATE ${CMAKE_SOURCE_DIR}/src)
-target_link_libraries(${TestProject} ${CoreLibraries} GTest::gtest_main)
+target_link_libraries(${TestProject} ${CoreLibraries} GTest::gtest_main GTest::gmock)
 include(GoogleTest)
 gtest_discover_tests(${TestProject})

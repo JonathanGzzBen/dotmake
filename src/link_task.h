@@ -13,11 +13,8 @@
 #include <string>
 #include <vector>
 
+#include "src/system_caller.h"
 #include "src/task.h"
-
-#ifdef _WIN32
-#include <filesystem>
-#endif
 
 /**
  * @class LinkTask
@@ -37,19 +34,9 @@ class LinkTask : public Task {
 
   virtual bool run() override {
     for (const auto& link : links) {
-#ifdef _WIN32
-      std::filesystem::path file_path(link.second.c_str());
-      std::string command =
-          "cmd /c mklink " +
-          std::string(std::filesystem::is_directory(file_path) ? "/D " : " ") +
-          link.first + " " + link.second;
-#else
-      std::string command{
-          std::string{"ln "} + std::string{force ? "-svnf" : "-snv"} +
-          std::string{" \"$PWD/"} + link.second + "\" " + link.first};
-#endif
-      if (std::system(command.c_str())) {
-        std::cout << "Error in command: " << command << "\n";
+      if (SystemCaller::GetInstance().CreateSymbolicLink(link.first,
+                                                         link.second)) {
+        std::cout << "Error creating link \"" << link.first << "\"\n";
         return false;
       }
     }

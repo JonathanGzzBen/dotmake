@@ -2,7 +2,7 @@
 #include <shell_task_parser.h>
 
 TEST(ShellTaskParser, ParseAndRunCorrect) {
-  auto hello_task = ShellTaskParser{"hello_task"}.parse_string(R"(
+  auto parsed_task = ShellTaskParser{"hello_task"}.parse_string(R"(
 
   type: shell
   commands:
@@ -10,7 +10,7 @@ TEST(ShellTaskParser, ParseAndRunCorrect) {
 
   )");
 
-  ASSERT_TRUE(hello_task.run());
+  ASSERT_TRUE(parsed_task.run());
 }
 
 TEST(ShellTaskParser, ParseWithoutCommands) {
