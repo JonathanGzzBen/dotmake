@@ -11,7 +11,7 @@ using ::testing::Exactly;
 using ::testing::Return;
 
 TEST(GetLinkCommand, LinkFile) {
-  EXPECT_EQ(get_link_command("link.txt", "target.txt"),
+  EXPECT_EQ(MockSystemCaller::get_link_command("link.txt", "target.txt"),
             "cmd /c mklink link.txt target.txt");
 }
 
@@ -22,7 +22,8 @@ TEST(GetLinkCommand, LinkDirectory) {
 #else
   const std::string expected = "ln -snv \"$PWD/dirtolink\" linkeddir";
 #endif
-  EXPECT_EQ(get_link_command("linkeddir", "dirtolink"), expected);
+  EXPECT_EQ(MockSystemCaller::get_link_command("linkeddir", "dirtolink"),
+            expected);
   std::filesystem::remove("dirtolink");
 }
 

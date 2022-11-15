@@ -11,7 +11,18 @@ class MockSystemCaller : public SystemCaller {
   ~MockSystemCaller() override = default;
   void operator=(MockSystemCaller const&) {}
 
-  MOCK_METHOD(int, RunShellCommand, (const std::string& cmd), (const, override));
+  static inline std::string get_link_command(const std::string& link,
+                                             const std::string& target,
+                                             bool force = false) {
+    return SystemCaller::get_link_command(link, target, force);
+  }
+
+  static inline std::string get_run_shell_command(const char* cmd) {
+    return SystemCaller::get_run_shell_command(cmd);
+  }
+
+  MOCK_METHOD(int, RunShellCommand, (const std::string& cmd),
+              (const, override));
   MOCK_METHOD(int, CreateSymbolicLink,
               (const std::string& link, const std::string& target, bool force),
               (const, override));

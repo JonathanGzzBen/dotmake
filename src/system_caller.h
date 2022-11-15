@@ -7,31 +7,6 @@
 #include <filesystem>
 #endif
 
-static inline std::string get_run_shell_command(const char* cmd) {
-#ifdef _WIN32
-  return std::string("powershell ") + cmd;
-#else
-  return cmd;
-#endif
-}
-
-static inline std::string get_link_command(const std::string& link,
-                                           const std::string& target,
-                                           bool force = false) {
-#ifdef _WIN32
-  std::filesystem::path target_path{target};
-  std::string command =
-      "cmd /c mklink " +
-      std::string(std::filesystem::is_directory(target_path) ? "/D " : "") +
-      link + " " + target;
-#else
-  std::string command{std::string{"ln "} +
-                      std::string{force ? "-svnf" : "-snv"} +
-                      std::string{" \"$PWD/"} + target + "\" " + link};
-#endif
-  return command;
-}
-
 /**
  * @class SystemCaller
  *
@@ -40,6 +15,42 @@ static inline std::string get_link_command(const std::string& link,
 class SystemCaller {
  protected:
   SystemCaller() = default;
+
+  /**
+   * @brief Get shell command to run command
+   * @param cmd Command to run
+   * @return Command to run (use powershell on Windows)
+   */
+  static inline std::string get_run_shell_command(const char* cmd) {
+#ifdef _WIN32
+    return std::string("powershell ") + cmd;
+#else
+    return cmd;
+#endif
+  }
+
+  /**
+   * @brief Get shell command to create symlink
+   * @param link Symbolic link to create
+   * @param target Target to which the symlink will point to
+   * @return Command to run
+   */
+  static inline std::string get_link_command(const std::string& link,
+                                             const std::string& target,
+                                             bool force = false) {
+#ifdef _WIN32
+    std::filesystem::path target_path{target};
+    std::string command =
+        "cmd /c mklink " +
+        std::string(std::filesystem::is_directory(target_path) ? "/D " : "") +
+        link + " " + target;
+#else
+    std::string command{std::string{"ln "} +
+                        std::string{force ? "-svnf" : "-snv"} +
+                        std::string{" \"$PWD/"} + target + "\" " + link};
+#endif
+    return command;
+  }
 
  public:
   SystemCaller(SystemCaller const&) = delete;
