@@ -26,15 +26,15 @@ class LinkTask : public Task {
   std::vector<std::pair<std::string, std::string>> links;
   bool force;
 
-  SystemCaller& system_caller;
+  AbstractSystemCaller& system_caller;
 
  public:
-  LinkTask(LinkTask& link_task,
-           SystemCaller& system_caller = SystemCaller::GetInstance())
+  LinkTask(LinkTask& link_task, AbstractSystemCaller& abstract_system_caller =
+                                    SystemCaller::GetInstance())
       : Task{link_task.name},
         links{link_task.links},
         force{link_task.force},
-        system_caller{system_caller} {}
+        system_caller{abstract_system_caller} {}
   LinkTask(std::string name,
            std::vector<std::pair<std::string, std::string>> links, bool force,
            SystemCaller& system_caller = SystemCaller::GetInstance())

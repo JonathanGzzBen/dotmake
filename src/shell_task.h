@@ -23,20 +23,20 @@
 class ShellTask : public Task {
  private:
   std::vector<std::string> commands;
-  SystemCaller& system_caller;
+  AbstractSystemCaller& system_caller;
 
  public:
   ShellTask(ShellTask& shell_task,
-            SystemCaller& system_caller = SystemCaller::GetInstance())
+            AbstractSystemCaller& system_caller = SystemCaller::GetInstance())
       : Task{shell_task.name},
         commands{shell_task.commands},
         system_caller{system_caller} {}
   ShellTask(std::string name, std::vector<std::string> commands,
-            SystemCaller& system_caller = SystemCaller::GetInstance())
+            AbstractSystemCaller& system_caller = SystemCaller::GetInstance())
       : Task{name}, commands{commands}, system_caller{system_caller} {}
   ShellTask(std::string name, std::vector<std::string> commands,
             std::vector<std::string> required_task_names,
-            SystemCaller& system_caller = SystemCaller::GetInstance())
+            AbstractSystemCaller& system_caller = SystemCaller::GetInstance())
       : Task{name, required_task_names},
         commands{commands},
         system_caller{system_caller} {}

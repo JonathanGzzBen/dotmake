@@ -7,14 +7,37 @@
 #include <filesystem>
 #endif
 
+#include "abstract_system_caller.h"
+
 /**
  * @class SystemCaller
  *
  * @brief Makes system calls to run shell commands and make symbolic links
  */
-class SystemCaller {
- protected:
+class SystemCaller final : public AbstractSystemCaller {
+ private:
   SystemCaller() = default;
+
+ public:
+  SystemCaller(SystemCaller const&) = delete;
+  virtual ~SystemCaller() = default;
+  void operator=(SystemCaller const&) = delete;
+
+  // SystemCaller is a singleton
+  static SystemCaller& GetInstance() {
+    static SystemCaller instance;
+    return instance;
+  }
+
+  inline int RunShellCommand(const std::string& cmd) const override {
+    return std::system((get_run_shell_command(cmd.c_str()).c_str()));
+  }
+
+  inline int CreateSymbolicLink(const std::string& link,
+                                const std::string& target,
+                                bool force = false) const override {
+    return std::system(get_link_command(link, target, force).c_str());
+  }
 
   /**
    * @brief Get shell command to run command
@@ -50,39 +73,6 @@ class SystemCaller {
                         std::string{" \"$PWD/"} + target + "\" " + link};
 #endif
     return command;
-  }
-
- public:
-  SystemCaller(SystemCaller const&) = delete;
-  virtual ~SystemCaller() = default;
-  void operator=(SystemCaller const&) = delete;
-
-  // SystemCaller is a singleton
-  static SystemCaller& GetInstance() {
-    static SystemCaller instance;
-    return instance;
-  }
-
-  /**
-   * @brief Runs shell command
-   * @param cmd Command to run
-   * @return System call result status
-   */
-  virtual inline int RunShellCommand(const std::string& cmd) const {
-    return std::system((get_run_shell_command(cmd.c_str()).c_str()));
-  }
-
-  /**
-   * @brief Creates a symbolic link
-   * @param link Link path
-   * @param target Target to which the link will point to
-   * @param force Overwrite file or symlink if already exists
-   * @return System call result status
-   */
-  virtual inline int CreateSymbolicLink(const std::string& link,
-                                        const std::string& target,
-                                        bool force = false) const {
-    return std::system(get_link_command(link, target, force).c_str());
   }
 };
 
