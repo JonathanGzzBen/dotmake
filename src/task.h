@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 
+namespace dotmake {
 /**
  * @class Task
  * @brief A runnable task
@@ -25,8 +26,8 @@ class Task {
   friend class Specification;
 
  protected:
-  std::vector<std::string> required_task_names;
   std::string name;
+  std::vector<std::string> required_task_names;
 
   Task(std::string name) : name{name} {};
   Task(std::string name, std::vector<std::string> required_task_names)
@@ -48,4 +49,6 @@ class Task {
    */
   virtual inline std::string get_name() { return name; }
 };
+
+}  // namespace dotmake
 #endif  //  TASK_H

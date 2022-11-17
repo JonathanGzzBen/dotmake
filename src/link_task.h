@@ -16,6 +16,7 @@
 #include "src/system_caller.h"
 #include "src/task.h"
 
+namespace dotmake {
 /**
  * @class LinkTask
  *
@@ -52,4 +53,6 @@ class LinkTask : public Task {
     return true;
   }
 };
+
+}  // namespace dotmake
 #endif  //  LINK_TASK_H

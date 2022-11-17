@@ -21,6 +21,7 @@
 #include "yaml-cpp/node/parse.h"
 #include "yaml-cpp/yaml.h"
 
+namespace dotmake {
 /**
  * @class LinkTaskParser
  * @brief YamlParser implementation for LinkTask
@@ -69,4 +70,6 @@ class LinkTaskParser : public YamlParser<LinkTask> {
     return LinkTask{name, links, force};
   }
 };
+
+}  // namespace dotmake
 #endif  //  LINK_TASK_PARSER_H

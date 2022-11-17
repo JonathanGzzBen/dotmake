@@ -5,7 +5,7 @@ static void BM_LinkTaskParser(benchmark::State& state) {
   // Perform setup here
   for (auto _ : state) {
     // This code gets timed
-  const auto hello_task = LinkTaskParser{"hello_task"}.parse_string(R"(
+  const auto hello_task = dotmake::LinkTaskParser{"hello_task"}.parse_string(R"(
 
   type: link
   links:

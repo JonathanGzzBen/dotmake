@@ -18,6 +18,7 @@
 #include "src/task.h"
 #include "yaml-cpp/yaml.h"
 
+namespace dotmake {
 /**
  * @class SpecificationParser
  * @brief YamlParser for Specification
@@ -66,5 +67,7 @@ class SpecificationParser : public YamlParser<Specification> {
     return specification;
   }
 };
+
+}  // namespace dotmake
 
 #endif  // SPECIFICATION_PARSER_H

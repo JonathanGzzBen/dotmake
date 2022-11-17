@@ -19,6 +19,7 @@
 #include "yaml-cpp/node/parse.h"
 #include "yaml-cpp/yaml.h"
 
+namespace dotmake {
 /**
  * @class ShellTaskParser
  *
@@ -63,4 +64,6 @@ class ShellTaskParser : public YamlParser<ShellTask> {
     return ShellTask{name, commands, required_task_names};
   }
 };
+
+}  // namespace dotmake
 #endif  //  SHELL_TASK_PARSER_H

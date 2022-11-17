@@ -5,7 +5,7 @@ static void BM_ShellTaskParser(benchmark::State& state) {
   // Perform setup here
   for (auto _ : state) {
     // This code gets timed
-  const auto hello_task = ShellTaskParser{"hello_task"}.parse_string(R"(
+  const auto hello_task = dotmake::ShellTaskParser{"hello_task"}.parse_string(R"(
 
   type: shell
   commands:

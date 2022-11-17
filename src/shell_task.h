@@ -15,6 +15,7 @@
 #include "src/system_caller.h"
 #include "src/task.h"
 
+namespace dotmake {
 /**
  * @class ShellTask
  *
@@ -53,4 +54,6 @@ class ShellTask : public Task {
     return true;
   }
 };
+
+}  // namespace dotmake
 #endif  //  SHELL_TASK_H
