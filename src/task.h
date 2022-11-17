@@ -29,12 +29,11 @@ class Task {
   std::string name;
   std::vector<std::string> required_task_names;
 
-  Task(std::string name) : name{name} {};
-  Task(std::string name, std::vector<std::string> required_task_names)
-      : name{name}, required_task_names{required_task_names} {};
+  Task(std::string name);
+  Task(std::string name, std::vector<std::string> required_task_names);
 
  public:
-  virtual ~Task() = default;
+  virtual ~Task();
 
   /**
    * @brief Runs task
@@ -47,8 +46,8 @@ class Task {
    * @brief Gets the name of the task
    * @return name of task
    */
-  virtual inline std::string get_name() { return name; }
+  virtual inline std::string get_name() const;
 };
-
 }  // namespace dotmake
+
 #endif  //  TASK_H

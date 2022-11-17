@@ -28,11 +28,21 @@ endif()
 
 FetchContent_MakeAvailable(yaml-cpp googletest googlebenchmark)
 
-set(CoreLibraries yaml-cpp)
+set(DotmakeLib ${PROJECT_NAME}lib)
+add_library(${DotmakeLib}   src/system_caller.cpp
+                            src/link_task.cpp
+                            src/shell_task.cpp
+                            src/link_task_parser.cpp
+                            src/shell_task_parser.cpp
+                            src/specification.cpp
+                            src/task.cpp
+                            )
+set_property(TARGET ${DotmakeLib} PROPERTY CXX_STANDARD 17)
+target_link_libraries(${DotmakeLib} PUBLIC yaml-cpp)
 
 add_executable(${PROJECT_NAME} src/main.cpp)
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
-target_link_libraries(${PROJECT_NAME} PRIVATE ${CoreLibraries})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${DotmakeLib})
 
 
 # Benchmarking
@@ -40,7 +50,7 @@ set(BenchmarkingProject ${CMAKE_PROJECT_NAME}_benchmark)
 add_executable(${BenchmarkingProject} benchmark/shell_task_parser.cpp benchmark/link_task_parser.cpp)
 set_property(TARGET ${BenchmarkingProject} PROPERTY CXX_STANDARD 17)
 target_include_directories(${BenchmarkingProject} PRIVATE ${CMAKE_SOURCE_DIR}/src)
-target_link_libraries(${BenchmarkingProject} ${CoreLibraries} benchmark::benchmark benchmark::benchmark_main)
+target_link_libraries(${BenchmarkingProject} ${DotmakeLib} benchmark::benchmark benchmark::benchmark_main)
 
 # Testing
 enable_testing()
@@ -51,6 +61,6 @@ add_executable(${TestProject}
 )
 set_property(TARGET ${TestProject} PROPERTY CXX_STANDARD 17)
 target_include_directories(${TestProject} PRIVATE ${CMAKE_SOURCE_DIR}/src)
-target_link_libraries(${TestProject} ${CoreLibraries} GTest::gtest_main GTest::gmock)
+target_link_libraries(${TestProject} ${DotmakeLib} GTest::gtest_main GTest::gmock)
 include(GoogleTest)
 gtest_discover_tests(${TestProject})

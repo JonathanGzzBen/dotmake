@@ -31,27 +31,14 @@ class LinkTask : public Task {
 
  public:
   LinkTask(LinkTask& link_task, AbstractSystemCaller& abstract_system_caller =
-                                    SystemCaller::GetInstance())
-      : Task{link_task.name},
-        links{link_task.links},
-        force{link_task.force},
-        system_caller{abstract_system_caller} {}
+                                    SystemCaller::GetInstance());
   LinkTask(std::string name,
            std::vector<std::pair<std::string, std::string>> links, bool force,
-           SystemCaller& system_caller = SystemCaller::GetInstance())
-      : Task{name}, links{links}, force{force}, system_caller{system_caller} {}
+           SystemCaller& system_caller = SystemCaller::GetInstance());
 
   virtual ~LinkTask() = default;
 
-  virtual bool run() override {
-    for (const auto& link : links) {
-      if (system_caller.CreateSymbolicLink(link.first, link.second)) {
-        std::cout << "Error creating link \"" << link.first << "\"\n";
-        return false;
-      }
-    }
-    return true;
-  }
+  virtual bool run() override;
 };
 
 }  // namespace dotmake

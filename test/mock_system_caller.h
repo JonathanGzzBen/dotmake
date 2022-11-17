@@ -3,7 +3,7 @@
 
 #include <gmock/gmock.h>
 
-#include "system_caller.h"
+#include "abstract_system_caller.h"
 
 class MockSystemCaller : public AbstractSystemCaller {
  public:

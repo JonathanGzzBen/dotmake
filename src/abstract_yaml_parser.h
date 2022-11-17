@@ -22,9 +22,9 @@
  * @tparam T type that should be parsed
  */
 template <typename T>
-class YamlParser {
+class AbstractYamlParser {
  public:
-  virtual ~YamlParser() = default;
+  virtual ~AbstractYamlParser() = default;
 
   /**
    * @brief parses a string

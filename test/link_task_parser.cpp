@@ -1,11 +1,8 @@
 #include <gtest/gtest.h>
 #include <link_task_parser.h>
-#include <shell_task_parser.h>
-#include <stdlib.h>
-
-#include <cstdlib>
 
 #include "mock_system_caller.h"
+#include "system_caller.h"
 
 using ::testing::Exactly;
 using ::testing::Return;

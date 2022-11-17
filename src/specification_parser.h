@@ -23,7 +23,7 @@ namespace dotmake {
  * @class SpecificationParser
  * @brief YamlParser for Specification
  */
-class SpecificationParser : public YamlParser<Specification> {
+class SpecificationParser : public AbstractYamlParser<Specification> {
  private:
   std::map<std::string, Task*> tasks;
 
