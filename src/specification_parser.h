@@ -18,6 +18,7 @@
 #include "src/task.h"
 #include "yaml-cpp/yaml.h"
 
+namespace dotmake {
 /**
  * @class SpecificationParser
  * @brief YamlParser for Specification
@@ -29,6 +30,10 @@ class SpecificationParser : public YamlParser<Specification> {
  public:
   SpecificationParser() = default;
   ~SpecificationParser() override = default;
+
+  Specification parse_string(std::string str) override {
+    return parse_node(YAML::Load(str.c_str()));
+  }
 
   Specification parse_file(std::string filename) override {
     return parse_node(YAML::LoadFile(filename));
@@ -62,5 +67,7 @@ class SpecificationParser : public YamlParser<Specification> {
     return specification;
   }
 };
+
+}  // namespace dotmake
 
 #endif  // SPECIFICATION_PARSER_H

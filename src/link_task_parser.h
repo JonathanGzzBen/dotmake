@@ -21,6 +21,7 @@
 #include "yaml-cpp/node/parse.h"
 #include "yaml-cpp/yaml.h"
 
+namespace dotmake {
 /**
  * @class LinkTaskParser
  * @brief YamlParser implementation for LinkTask
@@ -38,6 +39,10 @@ class LinkTaskParser : public YamlParser<LinkTask> {
  public:
   explicit LinkTaskParser(std::string name) : name{name} {}
   ~LinkTaskParser() override = default;
+
+  LinkTask parse_string(std::string str) override {
+    return parse_node(YAML::Load(str.c_str()));
+  }
 
   LinkTask parse_file(std::string filename) override {
     return parse_node(YAML::LoadFile(filename));
@@ -59,7 +64,12 @@ class LinkTaskParser : public YamlParser<LinkTask> {
         force = str_toupper(value.as<std::string>()) == "TRUE";
       }
     }
+    if (links.size() == 0) {
+      throw std::runtime_error{"Link task \"" + name + "\" has no links"};
+    }
     return LinkTask{name, links, force};
   }
 };
+
+}  // namespace dotmake
 #endif  //  LINK_TASK_PARSER_H

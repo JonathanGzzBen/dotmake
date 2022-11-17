@@ -19,6 +19,7 @@
 #include "yaml-cpp/node/parse.h"
 #include "yaml-cpp/yaml.h"
 
+namespace dotmake {
 /**
  * @class ShellTaskParser
  *
@@ -31,6 +32,10 @@ class ShellTaskParser : public YamlParser<ShellTask> {
  public:
   explicit ShellTaskParser(std::string name) : name{name} {}
   ~ShellTaskParser() override = default;
+
+  ShellTask parse_string(std::string str) override {
+    return parse_node(YAML::Load(str.c_str()));
+  }
 
   ShellTask parse_file(std::string filename) override {
     return parse_node(YAML::LoadFile(filename));
@@ -53,7 +58,12 @@ class ShellTaskParser : public YamlParser<ShellTask> {
         }
       }
     }
+    if (commands.size() == 0) {
+      throw std::runtime_error{"Shell task \"" + name + "\" has no commands"};
+    }
     return ShellTask{name, commands, required_task_names};
   }
 };
+
+}  // namespace dotmake
 #endif  //  SHELL_TASK_PARSER_H

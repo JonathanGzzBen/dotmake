@@ -6,13 +6,16 @@
  * @brief Specification class
  */
 
+#include <iostream>
 #include <map>
 #include <memory>
 #include <queue>
+#include <set>
 #include <string>
 
-#include "src/task.h"
+#include "task.h"
 
+namespace dotmake {
 /**
  * @brief Holds data of tasks specified in one or more specification files.
  *
@@ -89,5 +92,5 @@ class Specification {
     return true;
   }
 };
-
+}  // namespace dotmake
 #endif  // SPECIFICATION_H

@@ -13,12 +13,10 @@
 #include <string>
 #include <vector>
 
+#include "src/system_caller.h"
 #include "src/task.h"
 
-#ifdef WIN32
-#include <filesystem>
-#endif
-
+namespace dotmake {
 /**
  * @class LinkTask
  *
@@ -29,31 +27,32 @@ class LinkTask : public Task {
   std::vector<std::pair<std::string, std::string>> links;
   bool force;
 
+  AbstractSystemCaller& system_caller;
+
  public:
+  LinkTask(LinkTask& link_task, AbstractSystemCaller& abstract_system_caller =
+                                    SystemCaller::GetInstance())
+      : Task{link_task.name},
+        links{link_task.links},
+        force{link_task.force},
+        system_caller{abstract_system_caller} {}
   LinkTask(std::string name,
-           std::vector<std::pair<std::string, std::string>> links, bool force)
-      : Task{name}, links{links}, force{force} {}
+           std::vector<std::pair<std::string, std::string>> links, bool force,
+           SystemCaller& system_caller = SystemCaller::GetInstance())
+      : Task{name}, links{links}, force{force}, system_caller{system_caller} {}
+
   virtual ~LinkTask() = default;
 
   virtual bool run() override {
     for (const auto& link : links) {
-#ifdef WIN32
-      std::filesystem::path file_path(link.second.c_str());
-      std::string command =
-          "cmd /c mklink " +
-          std::string(std::filesystem::is_directory(file_path) ? "/D " : " ") +
-          link.first + " " + link.second;
-#else
-      std::string command{
-          std::string{"ln "} + std::string{force ? "-svnf" : "-snv"} +
-          std::string{" \"$PWD/"} + link.second + "\" " + link.first};
-#endif
-      if (std::system(command.c_str())) {
-        std::cout << "Error in command: " << command << "\n";
+      if (system_caller.CreateSymbolicLink(link.first, link.second)) {
+        std::cout << "Error creating link \"" << link.first << "\"\n";
         return false;
       }
     }
     return true;
   }
 };
+
+}  // namespace dotmake
 #endif  //  LINK_TASK_H

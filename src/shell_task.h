@@ -12,8 +12,10 @@
 #include <string>
 #include <vector>
 
+#include "src/system_caller.h"
 #include "src/task.h"
 
+namespace dotmake {
 /**
  * @class ShellTask
  *
@@ -22,23 +24,29 @@
 class ShellTask : public Task {
  private:
   std::vector<std::string> commands;
+  AbstractSystemCaller& system_caller;
 
  public:
-  ShellTask(std::string name, std::vector<std::string> commands)
-      : Task{name}, commands{commands} {}
+  ShellTask(ShellTask& shell_task,
+            AbstractSystemCaller& system_caller = SystemCaller::GetInstance())
+      : Task{shell_task.name},
+        commands{shell_task.commands},
+        system_caller{system_caller} {}
   ShellTask(std::string name, std::vector<std::string> commands,
-            std::vector<std::string> required_task_names)
-      : Task{name, required_task_names}, commands{commands} {}
+            AbstractSystemCaller& system_caller = SystemCaller::GetInstance())
+      : Task{name}, commands{commands}, system_caller{system_caller} {}
+  ShellTask(std::string name, std::vector<std::string> commands,
+            std::vector<std::string> required_task_names,
+            AbstractSystemCaller& system_caller = SystemCaller::GetInstance())
+      : Task{name, required_task_names},
+        commands{commands},
+        system_caller{system_caller} {}
 
   virtual ~ShellTask() = default;
 
   virtual bool run() override {
     for (const auto& command : commands) {
-#ifdef WIN32
-      if (std::system(std::string("powershell " + command).c_str())) {
-#else
-      if (std::system(command.c_str())) {
-#endif
+      if (system_caller.RunShellCommand(command)) {
         std::cout << "Error in command: " << command << "\n";
         return false;
       }
@@ -46,4 +54,6 @@ class ShellTask : public Task {
     return true;
   }
 };
+
+}  // namespace dotmake
 #endif  //  SHELL_TASK_H
