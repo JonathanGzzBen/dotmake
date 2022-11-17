@@ -8,18 +8,20 @@ dotmake::ShellTask::ShellTask(ShellTask& shell_task,
 dotmake::ShellTask::ShellTask(std::string name,
                               std::vector<std::string> commands,
                               AbstractSystemCaller& system_caller)
-    : Task{name}, commands{commands}, system_caller{system_caller} {}
+    : Task{std::move(name)},
+      commands{std::move(commands)},
+      system_caller{system_caller} {}
 dotmake::ShellTask::ShellTask(std::string name,
                               std::vector<std::string> commands,
                               std::vector<std::string> required_task_names,
                               AbstractSystemCaller& system_caller)
-    : Task{name, required_task_names},
-      commands{commands},
+    : Task{std::move(name), std::move(required_task_names)},
+      commands{std::move(commands)},
       system_caller{system_caller} {}
 
-bool dotmake::ShellTask::run() {
+auto dotmake::ShellTask::run() -> bool {
   for (const auto& command : commands) {
-    if (system_caller.RunShellCommand(command)) {
+    if (system_caller.RunShellCommand(command) != 0) {
       std::cout << "Error in command: " << command << "\n";
       return false;
     }

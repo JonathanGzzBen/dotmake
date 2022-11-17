@@ -24,20 +24,20 @@ class SystemCaller final : public AbstractSystemCaller {
   void operator=(SystemCaller const&) = delete;
 
   // SystemCaller is a singleton
-  static SystemCaller& GetInstance();
+  static auto GetInstance() -> SystemCaller&;
 
-  inline int RunShellCommand(const std::string& cmd) const override;
+  inline auto RunShellCommand(const std::string& cmd) const -> int override;
 
-  inline int CreateSymbolicLink(const std::string& link,
-                                const std::string& target,
-                                bool force = false) const override;
+  inline auto CreateSymbolicLink(const std::string& link,
+                                 const std::string& target,
+                                 bool force = false) const -> int override;
 
   /**
    * @brief Get shell command to run command
    * @param cmd Command to run
    * @return Command to run (use powershell on Windows)
    */
-  static inline std::string get_run_shell_command(const char* cmd);
+  static inline auto get_run_shell_command(const char* cmd) -> std::string;
 
   /**
    * @brief Get shell command to create symlink
@@ -45,9 +45,9 @@ class SystemCaller final : public AbstractSystemCaller {
    * @param target Target to which the symlink will point to
    * @return Command to run
    */
-  static inline std::string get_link_command(const std::string& link,
-                                             const std::string& target,
-                                             bool force = false);
+  static inline auto get_link_command(const std::string& link,
+                                      const std::string& target,
+                                      bool force = false) -> std::string;
 };
 
 #endif  // SYSTEM_CALLER_H

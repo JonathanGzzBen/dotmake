@@ -37,7 +37,7 @@ class ShellTask : public Task {
 
   virtual ~ShellTask() = default;
 
-  virtual bool run() override;
+  virtual auto run() -> bool override;
 };
 
 }  // namespace dotmake

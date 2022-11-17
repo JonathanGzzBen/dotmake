@@ -30,17 +30,17 @@ class LinkTaskParser : public AbstractYamlParser<LinkTask> {
  private:
   std::string name;
 
-  std::string str_toupper(std::string str) const;
+  static auto str_toupper(std::string str) -> std::string;
 
  public:
   explicit LinkTaskParser(std::string name);
   ~LinkTaskParser() override;
 
-  LinkTask parse_string(std::string str) override;
+  auto parse_string(std::string str) -> LinkTask override;
 
-  LinkTask parse_file(std::string filename) override;
+  auto parse_file(std::string filename) -> LinkTask override;
 
-  LinkTask parse_node(const YAML::Node& node) override;
+  auto parse_node(const YAML::Node& node) -> LinkTask override;
 };
 
 }  // namespace dotmake

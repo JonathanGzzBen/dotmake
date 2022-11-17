@@ -2,11 +2,11 @@
 
 dotmake::Specification::Specification() = default;
 
-bool dotmake::Specification::recursive_tasks_fill(
+auto dotmake::Specification::recursive_tasks_fill(
     const std::string& task_name,
     const std::map<std::string, std::shared_ptr<Task>> tasks,
     std::set<std::string>& processed_tasks,
-    std::queue<std::string>& result_queued_tasks) {
+    std::queue<std::string>& result_queued_tasks) -> bool {
   processed_tasks.insert(task_name);
   for (const auto& required_task : tasks.at(task_name)->required_task_names) {
     if (processed_tasks.find(required_task) != processed_tasks.cend()) {
@@ -22,8 +22,8 @@ bool dotmake::Specification::recursive_tasks_fill(
   return true;
 }
 
-[[nodiscard]] bool dotmake::Specification::run(
-    const std::string& task_name) const {
+[[nodiscard]] auto dotmake::Specification::run(
+    const std::string& task_name) const -> bool {
   if (tasks.find(task_name) == tasks.cend()) {
     std::cerr << "There is no task with name \"" << task_name
               << "\"  in specification file\n";

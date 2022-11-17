@@ -33,11 +33,11 @@ class ShellTaskParser : public AbstractYamlParser<ShellTask> {
   explicit ShellTaskParser(std::string name);
   ~ShellTaskParser() override;
 
-  ShellTask parse_string(std::string str) override;
+  auto parse_string(std::string str) -> ShellTask override;
 
-  ShellTask parse_file(std::string filename) override;
+  auto parse_file(std::string filename) -> ShellTask override;
 
-  ShellTask parse_node(const YAML::Node& node) override;
+  auto parse_node(const YAML::Node& node) -> ShellTask override;
 };
 
 }  // namespace dotmake

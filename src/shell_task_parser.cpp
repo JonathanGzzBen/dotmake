@@ -1,18 +1,23 @@
 #include "shell_task_parser.h"
 
-dotmake::ShellTaskParser::ShellTaskParser(std::string name) : name{name} {}
+#include "src/shell_task.h"
+
+dotmake::ShellTaskParser::ShellTaskParser(std::string name)
+    : name{std::move(name)} {}
 dotmake::ShellTaskParser::~ShellTaskParser() = default;
 
-dotmake::ShellTask dotmake::ShellTaskParser::parse_string(std::string str) {
+auto dotmake::ShellTaskParser::parse_string(std::string str)
+    -> dotmake::ShellTask {
   return parse_node(YAML::Load(str.c_str()));
 }
 
-dotmake::ShellTask dotmake::ShellTaskParser::parse_file(std::string filename) {
+auto dotmake::ShellTaskParser::parse_file(std::string filename)
+    -> dotmake::ShellTask {
   return parse_node(YAML::LoadFile(filename));
 }
 
-dotmake::ShellTask dotmake::ShellTaskParser::parse_node(
-    const YAML::Node& node) {
+auto dotmake::ShellTaskParser::parse_node(const YAML::Node& node)
+    -> dotmake::ShellTask {
   std::vector<std::string> commands;
   std::vector<std::string> required_task_names;
   for (YAML::const_iterator it = node.begin(); it != node.end(); ++it) {
@@ -29,7 +34,7 @@ dotmake::ShellTask dotmake::ShellTaskParser::parse_node(
       }
     }
   }
-  if (commands.size() == 0) {
+  if (commands.empty()) {
     throw std::runtime_error{"Shell task \"" + name + "\" has no commands"};
   }
   return ShellTask{name, commands, required_task_names};

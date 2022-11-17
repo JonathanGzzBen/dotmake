@@ -21,7 +21,7 @@ class AbstractSystemCaller {
    * @param cmd Command to run
    * @return System call result status
    */
-  virtual inline int RunShellCommand(const std::string& cmd) const = 0;
+  virtual inline auto RunShellCommand(const std::string& cmd) const -> int = 0;
 
   /**
    * @brief Creates a symbolic link
@@ -30,9 +30,9 @@ class AbstractSystemCaller {
    * @param force Overwrite file or symlink if already exists
    * @return System call result status
    */
-  virtual inline int CreateSymbolicLink(const std::string& link,
-                                        const std::string& target,
-                                        bool force = false) const = 0;
+  virtual inline auto CreateSymbolicLink(const std::string& link,
+                                         const std::string& target,
+                                         bool force = false) const -> int = 0;
 };
 
 #endif  // ABSTRACT_SYSTEM_CALLER_H
