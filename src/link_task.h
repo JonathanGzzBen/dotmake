@@ -30,7 +30,7 @@ class LinkTask : public Task {
   AbstractSystemCaller& system_caller;
 
  public:
-  LinkTask(LinkTask& link_task, AbstractSystemCaller& abstract_system_caller =
+  LinkTask(const LinkTask& link_task, AbstractSystemCaller& abstract_system_caller =
                                     SystemCaller::GetInstance());
   LinkTask(std::string name,
            std::vector<std::pair<std::string, std::string>> links, bool force,

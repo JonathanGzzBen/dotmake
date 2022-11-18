@@ -10,12 +10,12 @@ auto dotmake::LinkTaskParser::str_toupper(std::string str) -> std::string {
   return str;
 }
 
-auto dotmake::LinkTaskParser::parse_string(std::string str)
+inline auto dotmake::LinkTaskParser::parse_string(std::string str)
     -> dotmake::LinkTask {
   return parse_node(YAML::Load(str.c_str()));
 }
 
-auto dotmake::LinkTaskParser::parse_file(std::string filename)
+inline auto dotmake::LinkTaskParser::parse_file(std::string filename)
     -> dotmake::LinkTask {
   return parse_node(YAML::LoadFile(filename));
 }

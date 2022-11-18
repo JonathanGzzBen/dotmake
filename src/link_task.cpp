@@ -1,6 +1,6 @@
 #include "link_task.h"
 
-dotmake::LinkTask::LinkTask(LinkTask& link_task,
+dotmake::LinkTask::LinkTask(const LinkTask& link_task,
                             AbstractSystemCaller& abstract_system_caller)
     : Task{link_task.name},
       links{link_task.links},

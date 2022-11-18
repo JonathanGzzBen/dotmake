@@ -46,7 +46,7 @@ class Task {
    * @brief Gets the name of the task
    * @return name of task
    */
-  virtual inline auto get_name() const -> std::string;
+  virtual auto get_name() const -> std::string;
 };
 }  // namespace dotmake
 

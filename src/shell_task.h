@@ -27,7 +27,7 @@ class ShellTask : public Task {
   AbstractSystemCaller& system_caller;
 
  public:
-  ShellTask(ShellTask& shell_task,
+  ShellTask(const ShellTask& shell_task,
             AbstractSystemCaller& system_caller = SystemCaller::GetInstance());
   ShellTask(std::string name, std::vector<std::string> commands,
             AbstractSystemCaller& system_caller = SystemCaller::GetInstance());

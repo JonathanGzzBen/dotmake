@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 #include <link_task_parser.h>
 
+#include <filesystem>
+
 #include "mock_system_caller.h"
 #include "system_caller.h"
 
@@ -8,8 +10,12 @@ using ::testing::Exactly;
 using ::testing::Return;
 
 TEST(GetLinkCommand, LinkFile) {
-  EXPECT_EQ(SystemCaller::get_link_command("link.txt", "target.txt"),
-            "cmd /c mklink link.txt target.txt");
+#ifdef _WIN32
+  std::string expected = "cmd /c mklink link.txt target.txt";
+#else
+  std::string expected = "ln -snv \"$PWD/target.txt\" link.txt";
+#endif
+  EXPECT_EQ(SystemCaller::get_link_command("link.txt", "target.txt"), expected);
 }
 
 TEST(GetLinkCommand, LinkDirectory) {

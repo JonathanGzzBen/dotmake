@@ -6,12 +6,12 @@ dotmake::ShellTaskParser::ShellTaskParser(std::string name)
     : name{std::move(name)} {}
 dotmake::ShellTaskParser::~ShellTaskParser() = default;
 
-auto dotmake::ShellTaskParser::parse_string(std::string str)
+inline auto dotmake::ShellTaskParser::parse_string(std::string str)
     -> dotmake::ShellTask {
   return parse_node(YAML::Load(str.c_str()));
 }
 
-auto dotmake::ShellTaskParser::parse_file(std::string filename)
+inline auto dotmake::ShellTaskParser::parse_file(std::string filename)
     -> dotmake::ShellTask {
   return parse_node(YAML::LoadFile(filename));
 }

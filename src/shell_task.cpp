@@ -1,16 +1,18 @@
 #include "shell_task.h"
 
-dotmake::ShellTask::ShellTask(ShellTask& shell_task,
+dotmake::ShellTask::ShellTask(const ShellTask& shell_task,
                               AbstractSystemCaller& system_caller)
     : Task{shell_task.name},
       commands{shell_task.commands},
       system_caller{system_caller} {}
+
 dotmake::ShellTask::ShellTask(std::string name,
                               std::vector<std::string> commands,
                               AbstractSystemCaller& system_caller)
     : Task{std::move(name)},
       commands{std::move(commands)},
       system_caller{system_caller} {}
+
 dotmake::ShellTask::ShellTask(std::string name,
                               std::vector<std::string> commands,
                               std::vector<std::string> required_task_names,
