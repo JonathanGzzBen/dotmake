@@ -90,7 +90,7 @@ link_task_1:
 #include <thread>
 #include <vector>
 
-#include "src/specification_parser.h"
+#include "specification_parser.h"
 
 /**
  * @brief Handles help message

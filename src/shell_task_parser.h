@@ -12,9 +12,9 @@
 #include <string>
 #include <vector>
 
-#include "src/abstract_yaml_parser.h"
-#include "src/shell_task.h"
-#include "src/task.h"
+#include "abstract_yaml_parser.h"
+#include "shell_task.h"
+#include "task.h"
 #include "yaml-cpp/node/node.h"
 #include "yaml-cpp/node/parse.h"
 #include "yaml-cpp/yaml.h"

@@ -12,8 +12,8 @@
 #include <string>
 #include <vector>
 
-#include "src/shell_task.h"
-#include "src/task.h"
+#include "shell_task.h"
+#include "task.h"
 #include "yaml-cpp/node/node.h"
 #include "yaml-cpp/yaml.h"
 

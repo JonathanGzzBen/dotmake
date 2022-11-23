@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 project(dotmake)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
 include(FetchContent)
 FetchContent_Declare(
     yaml-cpp
@@ -39,10 +37,12 @@ add_library(${DotmakeLib}   src/system_caller.cpp
                             )
 set_property(TARGET ${DotmakeLib} PROPERTY CXX_STANDARD 17)
 target_link_libraries(${DotmakeLib} PUBLIC yaml-cpp)
+target_include_directories(${DotmakeLib} PUBLIC ${CMAKE_SOURCE_DIR}/src)
 
 add_executable(${PROJECT_NAME} src/main.cpp)
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 target_link_libraries(${PROJECT_NAME} PRIVATE ${DotmakeLib})
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
 
 # Benchmarking
@@ -64,3 +64,4 @@ target_include_directories(${TestProject} PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_link_libraries(${TestProject} ${DotmakeLib} GTest::gtest_main GTest::gmock)
 include(GoogleTest)
 gtest_discover_tests(${TestProject})
+
