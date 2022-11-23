@@ -2,7 +2,7 @@
 
 dotmake::ShellTask::ShellTask(const ShellTask& shell_task,
                               AbstractSystemCaller& system_caller)
-    : Task{shell_task.name},
+    : Task{shell_task.name, shell_task.required_task_names},
       commands{shell_task.commands},
       system_caller{system_caller} {}
 

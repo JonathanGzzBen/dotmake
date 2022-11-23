@@ -2,7 +2,7 @@
 
 dotmake::LinkTask::LinkTask(const LinkTask& link_task,
                             AbstractSystemCaller& abstract_system_caller)
-    : Task{link_task.name},
+    : Task{link_task.name, link_task.required_task_names},
       links{link_task.links},
       force{link_task.force},
       system_caller{abstract_system_caller} {}

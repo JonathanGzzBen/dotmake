@@ -99,7 +99,7 @@ link_task_1:
  * @retval true if help message was displayed
  * @retval false if help message was not displayed
  */
-auto HandleHelp(int argc, char *argv[]) -> bool {
+auto HandleHelp(int argc, char **argv) -> bool {
   if (argc < 3) {
     std::cout << "usage: dotmake [-h | --help] FILE TASK\n";
     return true;
