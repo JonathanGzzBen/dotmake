@@ -13,10 +13,10 @@
 #include <utility>
 #include <vector>
 
-#include "abstract_yaml_parser.h"
-#include "link_task.h"
-#include "shell_task.h"
-#include "task.h"
+#include "dotmake/abstract_yaml_parser.h"
+#include "dotmake/link_task.h"
+#include "dotmake/shell_task.h"
+#include "dotmake/task.h"
 #include "yaml-cpp/node/node.h"
 #include "yaml-cpp/node/parse.h"
 #include "yaml-cpp/yaml.h"

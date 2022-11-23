@@ -1,4 +1,4 @@
-#include "link_task_parser.h"
+#include "dotmake/link_task_parser.h"
 
 dotmake::LinkTaskParser::LinkTaskParser(std::string name)
     : name{std::move(name)} {}

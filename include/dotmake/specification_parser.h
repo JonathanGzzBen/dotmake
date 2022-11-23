@@ -10,12 +10,12 @@
 #include <memory>
 #include <string>
 
-#include "link_task.h"
-#include "link_task_parser.h"
-#include "shell_task.h"
-#include "shell_task_parser.h"
-#include "specification.h"
-#include "task.h"
+#include "dotmake/link_task.h"
+#include "dotmake/link_task_parser.h"
+#include "dotmake/shell_task.h"
+#include "dotmake/shell_task_parser.h"
+#include "dotmake/specification.h"
+#include "dotmake/task.h"
 #include "yaml-cpp/yaml.h"
 
 namespace dotmake {

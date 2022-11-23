@@ -12,8 +12,8 @@
 #include <string>
 #include <vector>
 
-#include "system_caller.h"
-#include "task.h"
+#include "dotmake/system_caller.h"
+#include "dotmake/task.h"
 
 namespace dotmake {
 /**

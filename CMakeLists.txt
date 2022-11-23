@@ -27,29 +27,26 @@ endif()
 FetchContent_MakeAvailable(yaml-cpp googletest googlebenchmark)
 
 set(DotmakeLib ${PROJECT_NAME}lib)
-add_library(${DotmakeLib}   src/system_caller.cpp
-                            src/link_task.cpp
-                            src/shell_task.cpp
-                            src/link_task_parser.cpp
-                            src/shell_task_parser.cpp
-                            src/specification.cpp
-                            src/task.cpp
+add_library(${DotmakeLib}   include/dotmake/system_caller.cpp
+                            include/dotmake/link_task.cpp
+                            include/dotmake/shell_task.cpp
+                            include/dotmake/link_task_parser.cpp
+                            include/dotmake/shell_task_parser.cpp
+                            include/dotmake/specification.cpp
+                            include/dotmake/task.cpp
                             )
 set_property(TARGET ${DotmakeLib} PROPERTY CXX_STANDARD 17)
 target_link_libraries(${DotmakeLib} PUBLIC yaml-cpp)
-target_include_directories(${DotmakeLib} PUBLIC ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(${DotmakeLib} PUBLIC ${CMAKE_SOURCE_DIR}/include)
 
 add_executable(${PROJECT_NAME} src/main.cpp)
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 target_link_libraries(${PROJECT_NAME} PRIVATE ${DotmakeLib})
-target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src)
-
 
 # Benchmarking
 set(BenchmarkingProject ${CMAKE_PROJECT_NAME}_benchmark)
 add_executable(${BenchmarkingProject} benchmark/shell_task_parser.cpp benchmark/link_task_parser.cpp)
 set_property(TARGET ${BenchmarkingProject} PROPERTY CXX_STANDARD 17)
-target_include_directories(${BenchmarkingProject} PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_link_libraries(${BenchmarkingProject} ${DotmakeLib} benchmark::benchmark benchmark::benchmark_main)
 
 # Testing
@@ -60,7 +57,6 @@ add_executable(${TestProject}
     test/link_task_parser.cpp
 )
 set_property(TARGET ${TestProject} PROPERTY CXX_STANDARD 17)
-target_include_directories(${TestProject} PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_link_libraries(${TestProject} ${DotmakeLib} GTest::gtest_main GTest::gmock)
 include(GoogleTest)
 gtest_discover_tests(${TestProject})

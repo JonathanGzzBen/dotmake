@@ -1,4 +1,4 @@
-#include "task.h"
+#include "dotmake/task.h"
 
 dotmake::Task::Task(std::string name) : name{std::move(name)} {};
 dotmake::Task::Task(std::string name,

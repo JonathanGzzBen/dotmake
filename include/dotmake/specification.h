@@ -13,7 +13,7 @@
 #include <set>
 #include <string>
 
-#include "task.h"
+#include "dotmake/task.h"
 
 namespace dotmake {
 /**

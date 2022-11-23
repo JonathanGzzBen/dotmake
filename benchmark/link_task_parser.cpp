@@ -1,5 +1,5 @@
 #include <benchmark/benchmark.h>
-#include <link_task_parser.h>
+#include <dotmake/link_task_parser.h>
 
 static void BM_LinkTaskParser(benchmark::State& state) {
   // Perform setup here

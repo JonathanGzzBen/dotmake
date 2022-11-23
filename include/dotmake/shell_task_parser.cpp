@@ -1,6 +1,6 @@
-#include "shell_task_parser.h"
+#include "dotmake/shell_task_parser.h"
 
-#include "shell_task.h"
+#include "dotmake/shell_task.h"
 
 dotmake::ShellTaskParser::ShellTaskParser(std::string name)
     : name{std::move(name)} {}

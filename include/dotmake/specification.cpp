@@ -1,4 +1,4 @@
-#include "specification.h"
+#include "dotmake/specification.h"
 
 dotmake::Specification::Specification() = default;
 

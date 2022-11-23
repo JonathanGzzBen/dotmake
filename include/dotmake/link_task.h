@@ -13,8 +13,8 @@
 #include <string>
 #include <vector>
 
-#include "system_caller.h"
-#include "task.h"
+#include "dotmake/system_caller.h"
+#include "dotmake/task.h"
 
 namespace dotmake {
 /**
@@ -30,8 +30,9 @@ class LinkTask : public Task {
   AbstractSystemCaller& system_caller;
 
  public:
-  LinkTask(const LinkTask& link_task, AbstractSystemCaller& abstract_system_caller =
-                                    SystemCaller::GetInstance());
+  LinkTask(const LinkTask& link_task,
+           AbstractSystemCaller& abstract_system_caller =
+               SystemCaller::GetInstance());
   LinkTask(std::string name,
            std::vector<std::pair<std::string, std::string>> links, bool force,
            SystemCaller& system_caller = SystemCaller::GetInstance());

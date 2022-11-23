@@ -1,4 +1,4 @@
-#include "shell_task.h"
+#include "dotmake/shell_task.h"
 
 dotmake::ShellTask::ShellTask(const ShellTask& shell_task,
                               AbstractSystemCaller& system_caller)

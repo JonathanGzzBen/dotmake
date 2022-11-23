@@ -90,7 +90,7 @@ link_task_1:
 #include <thread>
 #include <vector>
 
-#include "specification_parser.h"
+#include "dotmake/specification_parser.h"
 
 /**
  * @brief Handles help message
