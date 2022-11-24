@@ -27,17 +27,17 @@ namespace dotmake {
  */
 class ShellTaskParser : public AbstractYamlParser<ShellTask> {
  private:
-  std::string name;
+  std::string name_;
 
  public:
   explicit ShellTaskParser(std::string name);
   ~ShellTaskParser() override;
 
-  auto parse_string(std::string str) -> ShellTask override;
+  auto ParseString(std::string str) -> ShellTask override;
 
-  auto parse_file(std::string filename) -> ShellTask override;
+  auto ParseFile(std::string filename) -> ShellTask override;
 
-  auto parse_node(const YAML::Node& node) -> ShellTask override;
+  auto ParseNode(const YAML::Node& node) -> ShellTask override;
 };
 
 }  // namespace dotmake

@@ -30,7 +30,7 @@ TEST(GetLinkCommand, LinkDirectory) {
 }
 
 TEST(LinkTaskParser, LinkFileNoForce) {
-  auto parsed_task = dotmake::LinkTaskParser{"test_task"}.parse_string(R"(
+  auto parsed_task = dotmake::LinkTaskParser{"test_task"}.ParseString(R"(
 
   type: link
   links:
@@ -47,11 +47,11 @@ TEST(LinkTaskParser, LinkFileNoForce) {
 
   auto test_task = dotmake::LinkTask{parsed_task, mock_system_caller};
 
-  ASSERT_TRUE(test_task.run());
+  ASSERT_TRUE(test_task.Run());
 }
 
 TEST(LinkTaskParser, ParseWithoutLinks) {
-  ASSERT_ANY_THROW(dotmake::LinkTaskParser{"test_task"}.parse_string(R"(
+  ASSERT_ANY_THROW(dotmake::LinkTaskParser{"test_task"}.ParseString(R"(
 
   type: link
   links:
@@ -60,7 +60,7 @@ TEST(LinkTaskParser, ParseWithoutLinks) {
 }
 
 TEST(LinkTaskParser, ParseShellTask) {
-  ASSERT_ANY_THROW(dotmake::LinkTaskParser{"test_task"}.parse_string(R"(
+  ASSERT_ANY_THROW(dotmake::LinkTaskParser{"test_task"}.ParseString(R"(
 
   type: shell
   commands:

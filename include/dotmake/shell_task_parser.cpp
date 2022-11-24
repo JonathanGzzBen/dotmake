@@ -3,20 +3,20 @@
 #include "dotmake/shell_task.h"
 
 dotmake::ShellTaskParser::ShellTaskParser(std::string name)
-    : name{std::move(name)} {}
+    : name_{std::move(name)} {}
 dotmake::ShellTaskParser::~ShellTaskParser() = default;
 
-inline auto dotmake::ShellTaskParser::parse_string(std::string str)
+inline auto dotmake::ShellTaskParser::ParseString(std::string str)
     -> dotmake::ShellTask {
-  return parse_node(YAML::Load(str.c_str()));
+  return ParseNode(YAML::Load(str.c_str()));
 }
 
-inline auto dotmake::ShellTaskParser::parse_file(std::string filename)
+inline auto dotmake::ShellTaskParser::ParseFile(std::string filename)
     -> dotmake::ShellTask {
-  return parse_node(YAML::LoadFile(filename));
+  return ParseNode(YAML::LoadFile(filename));
 }
 
-auto dotmake::ShellTaskParser::parse_node(const YAML::Node& node)
+auto dotmake::ShellTaskParser::ParseNode(const YAML::Node& node)
     -> dotmake::ShellTask {
   std::vector<std::string> commands;
   std::vector<std::string> required_task_names;
@@ -35,7 +35,7 @@ auto dotmake::ShellTaskParser::parse_node(const YAML::Node& node)
     }
   }
   if (commands.empty()) {
-    throw std::runtime_error{"Shell task \"" + name + "\" has no commands"};
+    throw std::runtime_error{"Shell task \"" + name_ + "\" has no commands"};
   }
-  return ShellTask{name, commands, required_task_names};
+  return ShellTask{name_, commands, required_task_names};
 }

@@ -7,7 +7,7 @@ using ::testing::Exactly;
 using ::testing::Return;
 
 TEST(ShellTaskParser, ParseAndRunCorrect) {
-  auto parsed_task = dotmake::ShellTaskParser{"hello_task"}.parse_string(R"(
+  auto parsed_task = dotmake::ShellTaskParser{"hello_task"}.ParseString(R"(
 
   type: shell
   commands:
@@ -23,11 +23,11 @@ TEST(ShellTaskParser, ParseAndRunCorrect) {
 
   auto test_task = dotmake::ShellTask{parsed_task, mock_system_caller};
 
-  ASSERT_TRUE(test_task.run());
+  ASSERT_TRUE(test_task.Run());
 }
 
 TEST(ShellTaskParser, ParseWithoutCommands) {
-  ASSERT_ANY_THROW(dotmake::ShellTaskParser{"hello_task"}.parse_string(R"(
+  ASSERT_ANY_THROW(dotmake::ShellTaskParser{"hello_task"}.ParseString(R"(
 
   type: shell
   commands:
@@ -36,7 +36,7 @@ TEST(ShellTaskParser, ParseWithoutCommands) {
 }
 
 TEST(ShellTaskParser, ParseLinkTask) {
-  ASSERT_ANY_THROW(dotmake::ShellTaskParser{"hello_task"}.parse_string(R"(
+  ASSERT_ANY_THROW(dotmake::ShellTaskParser{"hello_task"}.ParseString(R"(
 
   type: link
   links:

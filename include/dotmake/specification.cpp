@@ -8,7 +8,7 @@ auto dotmake::Specification::recursive_tasks_fill(
     std::set<std::string>& processed_tasks,
     std::queue<std::string>& result_queued_tasks) -> bool {
   processed_tasks.insert(task_name);
-  for (const auto& required_task : tasks.at(task_name)->required_task_names) {
+  for (const auto& required_task : tasks.at(task_name)->required_task_names_) {
     if (processed_tasks.find(required_task) != processed_tasks.cend()) {
       // If required task was already processed
       continue;
@@ -22,9 +22,9 @@ auto dotmake::Specification::recursive_tasks_fill(
   return true;
 }
 
-[[nodiscard]] auto dotmake::Specification::run(
+[[nodiscard]] auto dotmake::Specification::Run(
     const std::string& task_name) const -> bool {
-  if (tasks.find(task_name) == tasks.cend()) {
+  if (tasks_.find(task_name) == tasks_.cend()) {
     std::cerr << "There is no task with name \"" << task_name
               << "\"  in specification file\n";
     return false;
@@ -32,11 +32,11 @@ auto dotmake::Specification::recursive_tasks_fill(
 
   std::queue<std::string> queued_tasks;
   std::set<std::string> processed_tasks;
-  if (!recursive_tasks_fill(task_name, tasks, processed_tasks, queued_tasks)) {
+  if (!recursive_tasks_fill(task_name, tasks_, processed_tasks, queued_tasks)) {
     return false;
   }
   while (!queued_tasks.empty()) {
-    if (!tasks.at(queued_tasks.front())->run()) {
+    if (!tasks_.at(queued_tasks.front())->Run()) {
       return false;
     }
     queued_tasks.pop();

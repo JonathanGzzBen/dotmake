@@ -127,7 +127,7 @@ auto main(int argc, char *argv[]) -> int {
   const std::string filename{argv[1]};
   const std::string name_task_to_run{argv[2]};
 
-  if (!dotmake::SpecificationParser{}.parse_file(filename).run(
+  if (!dotmake::SpecificationParser{}.ParseFile(filename).Run(
           name_task_to_run)) {
     std::cerr << "Could not run task \"" << name_task_to_run << "\"\n";
     exit(EXIT_FAILURE);

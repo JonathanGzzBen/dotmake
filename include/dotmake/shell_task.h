@@ -23,8 +23,8 @@ namespace dotmake {
  */
 class ShellTask : public Task {
  private:
-  std::vector<std::string> commands;
-  AbstractSystemCaller& system_caller;
+  std::vector<std::string> commands_;
+  AbstractSystemCaller& system_caller_;
 
  public:
   ShellTask(const ShellTask& shell_task,
@@ -35,9 +35,9 @@ class ShellTask : public Task {
             std::vector<std::string> required_task_names,
             AbstractSystemCaller& system_caller = SystemCaller::GetInstance());
 
-  virtual ~ShellTask() = default;
+   ~ShellTask() override = default;
 
-  virtual auto run() -> bool override;
+   auto Run() -> bool override;
 };
 
 }  // namespace dotmake

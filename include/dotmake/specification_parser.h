@@ -25,21 +25,21 @@ namespace dotmake {
  */
 class SpecificationParser : public AbstractYamlParser<Specification> {
  private:
-  std::map<std::string, Task*> tasks;
+  std::map<std::string, Task*> tasks_;
 
  public:
   SpecificationParser() = default;
   ~SpecificationParser() override = default;
 
-  Specification parse_string(std::string str) override {
-    return parse_node(YAML::Load(str.c_str()));
+  auto ParseString(std::string str) -> Specification override {
+    return ParseNode(YAML::Load(str.c_str()));
   }
 
-  Specification parse_file(std::string filename) override {
-    return parse_node(YAML::LoadFile(filename));
+  auto ParseFile(std::string filename) -> Specification override {
+    return ParseNode(YAML::LoadFile(filename));
   }
 
-  Specification parse_node(const YAML::Node& node) override {
+  auto ParseNode(const YAML::Node& node) -> Specification override {
     Specification specification{};
     for (const auto object : node) {
       const auto key = object.first;
@@ -54,11 +54,11 @@ class SpecificationParser : public AbstractYamlParser<Specification> {
             const auto task_type = sub_value.as<std::string>();
             const auto task_name = key.as<std::string>();
             if (task_type == "shell") {
-              specification.tasks[task_name] = std::make_shared<ShellTask>(
-                  ShellTaskParser{task_name}.parse_node(value));
+              specification.tasks_[task_name] = std::make_shared<ShellTask>(
+                  ShellTaskParser{task_name}.ParseNode(value));
             } else if (task_type == "link") {
-              specification.tasks[task_name] = std::make_shared<LinkTask>(
-                  LinkTaskParser{task_name}.parse_node(value));
+              specification.tasks_[task_name] = std::make_shared<LinkTask>(
+                  LinkTaskParser{task_name}.ParseNode(value));
             }
           }
         }

@@ -26,10 +26,10 @@ class Task {
   friend class Specification;
 
  protected:
-  std::string name;
-  std::vector<std::string> required_task_names;
+  std::string name_;
+  std::vector<std::string> required_task_names_;
 
-  Task(std::string name);
+  explicit Task(std::string name);
   Task(std::string name, std::vector<std::string> required_task_names);
 
  public:
@@ -40,13 +40,13 @@ class Task {
    * @retval true if task was sun successfully
    * @retval false if task failed
    */
-  [[nodiscard]] virtual bool run() = 0;
+  [[nodiscard]] virtual auto Run() -> bool = 0;
 
   /**
    * @brief Gets the name of the task
    * @return name of task
    */
-  virtual auto get_name() const -> std::string;
+  [[nodiscard]] virtual auto GetName() const -> std::string;
 };
 }  // namespace dotmake
 

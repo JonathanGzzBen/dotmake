@@ -26,7 +26,7 @@ class Specification {
   friend class SpecificationParser;
 
  private:
-  std::map<std::string, std::shared_ptr<Task>> tasks;
+  std::map<std::string, std::shared_ptr<Task>> tasks_;
 
   /**
    * @brief Does a postorder sort for the dependencies tree needed to run task
@@ -55,7 +55,7 @@ class Specification {
    * @param task_name Name of task to run
    * @return Whether the task was run successfully or not
    */
-  [[nodiscard]] bool run(const std::string& task_name) const;
+  [[nodiscard]] auto Run(const std::string& task_name) const -> bool;
 };
 }  // namespace dotmake
 #endif  // SPECIFICATION_H

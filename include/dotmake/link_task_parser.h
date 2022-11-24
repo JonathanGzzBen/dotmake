@@ -28,19 +28,19 @@ namespace dotmake {
  */
 class LinkTaskParser : public AbstractYamlParser<LinkTask> {
  private:
-  std::string name;
+  std::string name_;
 
-  static auto str_toupper(std::string str) -> std::string;
+  static auto StrToupper(std::string str) -> std::string;
 
  public:
   explicit LinkTaskParser(std::string name);
   ~LinkTaskParser() override;
 
-  auto parse_string(std::string str) -> LinkTask override;
+  auto ParseString(std::string str) -> LinkTask override;
 
-  auto parse_file(std::string filename) -> LinkTask override;
+  auto ParseFile(std::string filename) -> LinkTask override;
 
-  auto parse_node(const YAML::Node& node) -> LinkTask override;
+  auto ParseNode(const YAML::Node& node) -> LinkTask override;
 };
 
 }  // namespace dotmake

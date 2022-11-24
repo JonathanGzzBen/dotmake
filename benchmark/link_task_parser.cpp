@@ -1,11 +1,12 @@
 #include <benchmark/benchmark.h>
 #include <dotmake/link_task_parser.h>
 
-static void BM_LinkTaskParser(benchmark::State& state) {
+static void BenchmarkLinkTaskParser(benchmark::State& state) {
   // Perform setup here
-  for (auto _ : state) {
+  for (auto ignore : state) {
     // This code gets timed
-  const auto hello_task = dotmake::LinkTaskParser{"hello_task"}.parse_string(R"(
+    const auto hello_task =
+        dotmake::LinkTaskParser{"hello_task"}.ParseString(R"(
 
   type: link
   links:
@@ -15,4 +16,4 @@ static void BM_LinkTaskParser(benchmark::State& state) {
   }
 }
 // Register the function as a benchmark
-BENCHMARK(BM_LinkTaskParser);
+BENCHMARK(BenchmarkLinkTaskParser);

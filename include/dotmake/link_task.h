@@ -24,10 +24,10 @@ namespace dotmake {
  */
 class LinkTask : public Task {
  private:
-  std::vector<std::pair<std::string, std::string>> links;
-  bool force;
+  std::vector<std::pair<std::string, std::string>> links_;
+  bool force_;
 
-  AbstractSystemCaller& system_caller;
+  AbstractSystemCaller& system_caller_;
 
  public:
   LinkTask(const LinkTask& link_task,
@@ -37,9 +37,9 @@ class LinkTask : public Task {
            std::vector<std::pair<std::string, std::string>> links, bool force,
            SystemCaller& system_caller = SystemCaller::GetInstance());
 
-  virtual ~LinkTask() = default;
+  ~LinkTask() override = default;
 
-  virtual bool run() override;
+  auto Run() -> bool override;
 };
 
 }  // namespace dotmake
