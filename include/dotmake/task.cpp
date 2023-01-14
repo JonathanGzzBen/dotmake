@@ -9,3 +9,8 @@ dotmake::Task::Task(std::string name,
 dotmake::Task::~Task() = default;
 
 inline auto dotmake::Task::GetName() const -> std::string { return name_; }
+
+auto dotmake::Task::SetName(const std::string& name) -> Task& {
+  name_ = name;
+  return *this;
+}

@@ -27,6 +27,8 @@ class ShellTask : public Task {
   AbstractSystemCaller& system_caller_;
 
  public:
+  explicit ShellTask(
+      AbstractSystemCaller& system_caller = SystemCaller::GetInstance());
   ShellTask(const ShellTask& shell_task,
             AbstractSystemCaller& system_caller = SystemCaller::GetInstance());
   ShellTask(std::string name, std::vector<std::string> commands,
@@ -35,9 +37,9 @@ class ShellTask : public Task {
             std::vector<std::string> required_task_names,
             AbstractSystemCaller& system_caller = SystemCaller::GetInstance());
 
-   ~ShellTask() override = default;
+  ~ShellTask() override = default;
 
-   auto Run() -> bool override;
+  auto Run() -> bool override;
 };
 
 }  // namespace dotmake

@@ -1,13 +1,14 @@
-#include <dotmake/shell_task_parser.h>
 #include <gtest/gtest.h>
 
+#include "dotmake/yaml_parser.h"
 #include "mock_system_caller.h"
 
 using ::testing::Exactly;
 using ::testing::Return;
+using namespace dotmake;
 
 TEST(ShellTaskParser, ParseAndRunCorrect) {
-  auto parsed_task = dotmake::ShellTaskParser{"hello_task"}.ParseString(R"(
+  auto parsed_task = yaml_parser::ParseString<ShellTask>(R"(
 
   type: shell
   commands:
@@ -27,7 +28,7 @@ TEST(ShellTaskParser, ParseAndRunCorrect) {
 }
 
 TEST(ShellTaskParser, ParseWithoutCommands) {
-  ASSERT_ANY_THROW(dotmake::ShellTaskParser{"hello_task"}.ParseString(R"(
+  ASSERT_ANY_THROW(yaml_parser::ParseString<ShellTask>(R"(
 
   type: shell
   commands:
@@ -36,7 +37,7 @@ TEST(ShellTaskParser, ParseWithoutCommands) {
 }
 
 TEST(ShellTaskParser, ParseLinkTask) {
-  ASSERT_ANY_THROW(dotmake::ShellTaskParser{"hello_task"}.ParseString(R"(
+  ASSERT_ANY_THROW(yaml_parser::ParseString<ShellTask>(R"(
 
   type: link
   links:
