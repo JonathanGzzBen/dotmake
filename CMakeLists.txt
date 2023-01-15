@@ -32,7 +32,7 @@ add_library(${DotmakeLib} include/dotmake/system_caller.cpp
         include/dotmake/shell_task.cpp
         include/dotmake/specification.cpp
         include/dotmake/task.cpp
-#        include/dotmake/yaml_parser.cpp
+        include/dotmake/yaml_parser.cpp
         )
 set_property(TARGET ${DotmakeLib} PROPERTY CXX_STANDARD 17)
 target_link_libraries(${DotmakeLib} PUBLIC yaml-cpp)
@@ -56,7 +56,7 @@ enable_testing()
 set(TestProject ${PROJECT_NAME}_test)
 add_executable(${TestProject}
         test/shell_task_parser_test.cpp
-        #        test/link_task_parser_test.cpp
+        test/link_task_parser_test.cpp
         )
 set_property(TARGET ${TestProject} PROPERTY CXX_STANDARD 17)
 target_link_libraries(${TestProject} ${DotmakeLib} GTest::gtest_main GTest::gmock)
