@@ -42,7 +42,7 @@ class Specification {
    */
   static bool recursive_tasks_fill(
       const std::string& task_name,
-      const std::map<std::string, std::shared_ptr<Task>> tasks,
+      std::map<std::string, std::shared_ptr<Task>> tasks,
       std::set<std::string>& processed_tasks,
       std::queue<std::string>& result_queued_tasks);
 
@@ -56,6 +56,7 @@ class Specification {
    * @return Whether the task was run successfully or not
    */
   [[nodiscard]] auto Run(const std::string& task_name) const -> bool;
+  [[nodiscard]] auto GetTasks() -> auto{ return &tasks_; }
 };
 }  // namespace dotmake
 #endif  // SPECIFICATION_H

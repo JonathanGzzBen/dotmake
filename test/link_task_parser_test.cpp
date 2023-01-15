@@ -1,9 +1,8 @@
-#include <dotmake/link_task_parser.h>
 #include <gtest/gtest.h>
 
 #include <filesystem>
 
-#include "dotmake/system_caller.h"
+#include "dotmake/yaml_parser.h"
 #include "mock_system_caller.h"
 
 using ::testing::Exactly;
@@ -30,7 +29,7 @@ TEST(GetLinkCommand, LinkDirectory) {
 }
 
 TEST(LinkTaskParser, LinkFileNoForce) {
-  auto parsed_task = dotmake::LinkTaskParser{"test_task"}.ParseString(R"(
+  auto parsed_task = dotmake::yaml_parser::ParseString<dotmake::LinkTask>(R"(
 
   type: link
   links:
@@ -51,7 +50,7 @@ TEST(LinkTaskParser, LinkFileNoForce) {
 }
 
 TEST(LinkTaskParser, ParseWithoutLinks) {
-  ASSERT_ANY_THROW(dotmake::LinkTaskParser{"test_task"}.ParseString(R"(
+  ASSERT_ANY_THROW(dotmake::yaml_parser::ParseString<dotmake::LinkTask>(R"(
 
   type: link
   links:
@@ -60,7 +59,7 @@ TEST(LinkTaskParser, ParseWithoutLinks) {
 }
 
 TEST(LinkTaskParser, ParseShellTask) {
-  ASSERT_ANY_THROW(dotmake::LinkTaskParser{"test_task"}.ParseString(R"(
+  ASSERT_ANY_THROW(dotmake::yaml_parser::ParseString<dotmake::LinkTask>(R"(
 
   type: shell
   commands:

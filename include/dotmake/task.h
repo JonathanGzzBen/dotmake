@@ -47,6 +47,11 @@ class Task {
    * @return name of task
    */
   [[nodiscard]] virtual auto GetName() const -> std::string;
+  /**
+   * @brief Gets the name of the task
+   * @return name of task
+   */
+  virtual auto SetName(const std::string& name) -> Task&;
 };
 }  // namespace dotmake
 
