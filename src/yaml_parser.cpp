@@ -1,6 +1,6 @@
 #include "dotmake/yaml_parser.h"
 
-#include <memory>
+#include <algorithm>
 #include <string>
 #include <vector>
 

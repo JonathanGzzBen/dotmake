@@ -1,5 +1,7 @@
 #include "dotmake/link_task.h"
 
+#include <iostream>
+
 dotmake::LinkTask::LinkTask(const LinkTask& link_task,
                             AbstractSystemCaller& abstract_system_caller)
     : Task{link_task.name_, link_task.required_task_names_},

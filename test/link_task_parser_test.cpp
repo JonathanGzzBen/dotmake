@@ -14,7 +14,7 @@ TEST(GetLinkCommand, LinkFile) {
 #else
   std::string expected = "ln -snv \"$PWD/target.txt\" link.txt";
 #endif
-  EXPECT_EQ(SystemCaller::get_link_command("link.txt", "target.txt"), expected);
+  EXPECT_EQ(SystemCaller::GetLinkCommand("link.txt", "target.txt"), expected);
 }
 
 TEST(GetLinkCommand, LinkDirectory) {
@@ -24,7 +24,7 @@ TEST(GetLinkCommand, LinkDirectory) {
 #else
   const std::string expected = "ln -snv \"$PWD/dirtolink\" linkeddir";
 #endif
-  EXPECT_EQ(SystemCaller::get_link_command("linkeddir", "dirtolink"), expected);
+  EXPECT_EQ(SystemCaller::GetLinkCommand("linkeddir", "dirtolink"), expected);
   std::filesystem::remove("dirtolink");
 }
 

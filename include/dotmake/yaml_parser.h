@@ -4,18 +4,14 @@
  * @brief YamlParser class
  */
 
-#include <cstdlib>
-#include <iostream>
-#include <memory>
 #include <string>
-#include <typeinfo>
-#include <vector>
 
 #include "dotmake/link_task.h"
 #include "dotmake/shell_task.h"
 #include "dotmake/specification.h"
 #include "yaml-cpp/node/node.h"
-#include "yaml-cpp/yaml.h"
+#include "yaml-cpp/node/parse.h"
+#include "yaml-cpp/yaml.h" // This must be included to initialize some templates
 
 /**
  * @brief Yaml Parser

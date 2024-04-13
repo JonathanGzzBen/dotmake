@@ -1,7 +1,6 @@
 #ifndef ABSTRACT_SYSTEM_CALLER_H
 #define ABSTRACT_SYSTEM_CALLER_H
 
-#include <cstdlib>
 #include <string>
 #ifdef _WIN32
 #include <filesystem>

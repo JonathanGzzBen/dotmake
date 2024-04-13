@@ -6,8 +6,6 @@
  * @brief Task abstract class
  */
 
-#include <map>
-#include <memory>
 #include <string>
 #include <vector>
 

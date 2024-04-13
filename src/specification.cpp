@@ -2,7 +2,7 @@
 
 dotmake::Specification::Specification() = default;
 
-auto dotmake::Specification::recursive_tasks_fill(
+auto dotmake::Specification::RecursiveTasksFill(
     const std::string& task_name,
     const std::map<std::string, std::shared_ptr<Task>> tasks,
     std::set<std::string>& processed_tasks,
@@ -13,7 +13,7 @@ auto dotmake::Specification::recursive_tasks_fill(
       // If required task was already processed
       continue;
     }
-    if (!recursive_tasks_fill(required_task, tasks, processed_tasks,
+    if (!RecursiveTasksFill(required_task, tasks, processed_tasks,
                               result_queued_tasks)) {
       return false;
     }
@@ -32,7 +32,7 @@ auto dotmake::Specification::recursive_tasks_fill(
 
   std::queue<std::string> queued_tasks;
   std::set<std::string> processed_tasks;
-  if (!recursive_tasks_fill(task_name, tasks_, processed_tasks, queued_tasks)) {
+  if (!RecursiveTasksFill(task_name, tasks_, processed_tasks, queued_tasks)) {
     return false;
   }
   while (!queued_tasks.empty()) {

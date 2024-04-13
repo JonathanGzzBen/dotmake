@@ -40,11 +40,11 @@ class Specification {
    * @retval true if tasks could be sorted successfully
    * @retval false if sorting failed (cyclic o missing dependencies)
    */
-  static bool recursive_tasks_fill(
+  static auto RecursiveTasksFill(
       const std::string& task_name,
       std::map<std::string, std::shared_ptr<Task>> tasks,
       std::set<std::string>& processed_tasks,
-      std::queue<std::string>& result_queued_tasks);
+      std::queue<std::string>& result_queued_tasks) -> bool;
 
  public:
   Specification();

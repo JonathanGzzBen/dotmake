@@ -6,16 +6,16 @@ auto SystemCaller::GetInstance() -> SystemCaller& {
 }
 
 inline auto SystemCaller::RunShellCommand(const std::string& cmd) const -> int {
-  return std::system((get_run_shell_command(cmd.c_str()).c_str()));
+  return std::system((GetRunShellCommand(cmd.c_str()).c_str()));
 }
 
 inline auto SystemCaller::CreateSymbolicLink(const std::string& link,
                                              const std::string& target,
                                              bool force) const -> int {
-  return std::system(get_link_command(link, target, force).c_str());
+  return std::system(GetLinkCommand(link, target, force).c_str());
 }
 
-inline auto SystemCaller::get_run_shell_command(const char* cmd)
+inline auto SystemCaller::GetRunShellCommand(const char* cmd)
     -> std::string {
 #ifdef _WIN32
   return std::string("powershell ") + cmd;
@@ -24,7 +24,7 @@ inline auto SystemCaller::get_run_shell_command(const char* cmd)
 #endif
 }
 
-inline auto SystemCaller::get_link_command(const std::string& link,
+inline auto SystemCaller::GetLinkCommand(const std::string& link,
                                            const std::string& target,
                                            bool force) -> std::string {
 #ifdef _WIN32

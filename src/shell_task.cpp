@@ -1,5 +1,7 @@
 #include "dotmake/shell_task.h"
 
+#include <iostream>
+
 dotmake::ShellTask::ShellTask(const ShellTask& shell_task,
                               AbstractSystemCaller& system_caller)
     : Task{shell_task.name_, shell_task.required_task_names_},
