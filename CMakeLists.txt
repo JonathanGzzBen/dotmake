@@ -27,12 +27,12 @@ endif ()
 FetchContent_MakeAvailable(yaml-cpp googletest googlebenchmark)
 
 set(DotmakeLib ${PROJECT_NAME}lib)
-add_library(${DotmakeLib} include/dotmake/system_caller.cpp
-        include/dotmake/link_task.cpp
-        include/dotmake/shell_task.cpp
-        include/dotmake/specification.cpp
-        include/dotmake/task.cpp
-        include/dotmake/yaml_parser.cpp
+add_library(${DotmakeLib} src/system_caller.cpp
+        src/link_task.cpp
+        src/shell_task.cpp
+        src/specification.cpp
+        src/task.cpp
+        src/yaml_parser.cpp
         )
 set_property(TARGET ${DotmakeLib} PROPERTY CXX_STANDARD 17)
 target_link_libraries(${DotmakeLib} PUBLIC yaml-cpp)
