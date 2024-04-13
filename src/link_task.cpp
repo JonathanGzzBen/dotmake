@@ -19,7 +19,8 @@ dotmake::LinkTask::LinkTask(
 
 auto dotmake::LinkTask::Run() -> bool {
   for (const auto& link : links_) {
-    if (system_caller_.CreateSymbolicLink(link.first, link.second) != 0) {
+    if (system_caller_.CreateSymbolicLink(link.first, link.second, false) !=
+        0) {
       std::cout << "Error creating link \"" << link.first << "\"\n";
       return false;
     }
