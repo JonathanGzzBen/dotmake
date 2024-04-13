@@ -24,6 +24,19 @@
 namespace dotmake::yaml_parser {
 
 /**
+ * @brief parses a node
+ * @param node YAML node to parse
+ * @return Object parsed from YAML node
+ */
+template <typename T>
+auto ParseNode(YAML::Node node) -> T {
+  static_assert(std::is_same<T, ShellTask>::value ||
+                    std::is_same<T, ShellTask>::value ||
+                    std::is_same<T, Specification>::value,
+                "No yaml parser implemented for this type");
+}
+
+/**
  * @brief parses a string
  * @param filename yaml string to parse
  * @return Object parsed from string
@@ -41,19 +54,6 @@ auto ParseString(const std::string& str) -> T {
 template <typename T>
 auto ParseFile(const std::string& filename) -> T {
   return ParseNode<T>(YAML::LoadFile(filename));
-}
-
-/**
- * @brief parses a node
- * @param node YAML node to parse
- * @return Object parsed from YAML node
- */
-template <typename T>
-auto ParseNode(YAML::Node node) -> T {
-  static_assert(std::is_same<T, ShellTask>::value ||
-                    std::is_same<T, ShellTask>::value ||
-                    std::is_same<T, Specification>::value,
-                "No yaml parser implemented for this type");
 }
 
 template <>
