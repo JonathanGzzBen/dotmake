@@ -6,6 +6,9 @@ dotmake::ShellTask::ShellTask(const ShellTask& shell_task,
       commands_{shell_task.commands_},
       system_caller_{system_caller} {}
 
+dotmake::ShellTask::ShellTask(AbstractSystemCaller& system_caller)
+    : Task(""), system_caller_{system_caller} {}
+
 dotmake::ShellTask::ShellTask(std::string name,
                               std::vector<std::string> commands,
                               AbstractSystemCaller& system_caller)

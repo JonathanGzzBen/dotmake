@@ -90,7 +90,7 @@ link_task_1:
 #include <thread>
 #include <vector>
 
-#include "dotmake/specification_parser.h"
+#include "dotmake/yaml_parser.h"
 
 /**
  * @brief Handles help message
@@ -127,10 +127,11 @@ auto main(int argc, char *argv[]) -> int {
   const std::string filename{argv[1]};
   const std::string name_task_to_run{argv[2]};
 
-  if (!dotmake::SpecificationParser{}.ParseFile(filename).Run(
+  if (!dotmake::yaml_parser::ParseFile<dotmake::Specification>(filename).Run(
           name_task_to_run)) {
     std::cerr << "Could not run task \"" << name_task_to_run << "\"\n";
     exit(EXIT_FAILURE);
   }
+
   return 0;
 }
