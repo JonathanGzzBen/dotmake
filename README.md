@@ -75,3 +75,10 @@ link_task_1:
     xd: ..\filetolink.txt
     idea: ..\.idea
 ```
+
+## TODO
+
+- Add option to print help for each task
+- Add a way to specify command-line arguments for tasks
+- Add all classes to Doxygen docs
+- Move `*.cpp` files from `include/dotmake` to `src`
