@@ -56,6 +56,14 @@ class Specification {
    * @return Whether the task was run successfully or not
    */
   [[nodiscard]] auto Run(const std::string& task_name) const -> bool;
+  /**
+   * @brief Prints to stdout the help message for specified task, which sould be
+   * available in the specification.
+   * @param task_name Name of task to print message
+   * @return Whether the task message was printed successfully or not
+   */
+  [[nodiscard]] auto PrintHelpMessageForTask(const std::string& task_name) const
+      -> bool;
   [[nodiscard]] auto GetTasks() -> auto { return &tasks_; }
 };
 }  // namespace dotmake
