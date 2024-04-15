@@ -56,7 +56,7 @@ class Specification {
    * @return Whether the task was run successfully or not
    */
   [[nodiscard]] auto Run(const std::string& task_name) const -> bool;
-  [[nodiscard]] auto GetTasks() -> auto{ return &tasks_; }
+  [[nodiscard]] auto GetTasks() -> auto { return &tasks_; }
 };
 }  // namespace dotmake
 #endif  // SPECIFICATION_H

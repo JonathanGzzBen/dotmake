@@ -14,7 +14,7 @@ auto dotmake::Specification::RecursiveTasksFill(
       continue;
     }
     if (!RecursiveTasksFill(required_task, tasks, processed_tasks,
-                              result_queued_tasks)) {
+                            result_queued_tasks)) {
       return false;
     }
   }

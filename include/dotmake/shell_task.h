@@ -31,6 +31,7 @@ class ShellTask : public Task {
   ShellTask(std::string name, std::vector<std::string> commands,
             AbstractSystemCaller& system_caller = SystemCaller::GetInstance());
   ShellTask(std::string name, std::vector<std::string> commands,
+            std::string help_message,
             std::vector<std::string> required_task_names,
             AbstractSystemCaller& system_caller = SystemCaller::GetInstance());
 

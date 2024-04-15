@@ -4,15 +4,16 @@
 
 dotmake::LinkTask::LinkTask(const LinkTask& link_task,
                             AbstractSystemCaller& abstract_system_caller)
-    : Task{link_task.name_, link_task.required_task_names_},
+    : Task{link_task.name_, link_task.help_message_,
+           link_task.required_task_names_},
       links_{link_task.links_},
       force_{link_task.force_},
       system_caller_{abstract_system_caller} {}
 
 dotmake::LinkTask::LinkTask(
     std::string name, std::vector<std::pair<std::string, std::string>> links,
-    bool force, SystemCaller& system_caller)
-    : Task{std::move(name)},
+    bool force, std::string help_message, SystemCaller& system_caller)
+    : Task{std::move(name), std::move(help_message)},
       links_{std::move(links)},
       force_{force},
       system_caller_{system_caller} {}

@@ -11,7 +11,7 @@
 #include "dotmake/specification.h"
 #include "yaml-cpp/node/node.h"
 #include "yaml-cpp/node/parse.h"
-#include "yaml-cpp/yaml.h" // This must be included to initialize some templates
+#include "yaml-cpp/yaml.h"  // This must be included to initialize some templates
 
 /**
  * @brief Yaml Parser

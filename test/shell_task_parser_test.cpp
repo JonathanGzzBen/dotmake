@@ -36,6 +36,21 @@ TEST(ShellTaskParser, ParseWithoutCommands) {
   )"));
 }
 
+TEST(ShellTaskParser, ParseWithHelpMesssage) {
+  auto parsed_task = yaml_parser::ParseString<ShellTask>(R"(
+
+  type: shell
+  commands:
+    - echo "hello"
+  help: This task outputs "hello" to stdout
+
+  )");
+
+  const std::string expected = "This task outputs \"hello\" to stdout";
+
+  EXPECT_EQ(parsed_task.GetHelpMessage(), expected);
+}
+
 TEST(ShellTaskParser, ParseLinkTask) {
   ASSERT_ANY_THROW(yaml_parser::ParseString<ShellTask>(R"(
 
