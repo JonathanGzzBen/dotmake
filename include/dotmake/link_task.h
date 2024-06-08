@@ -31,6 +31,7 @@ class LinkTask : public Task {
                SystemCaller::GetInstance());
   LinkTask(std::string name,
            std::vector<std::pair<std::string, std::string>> links, bool force,
+           std::string help_message,
            SystemCaller& system_caller = SystemCaller::GetInstance());
 
   ~LinkTask() override = default;

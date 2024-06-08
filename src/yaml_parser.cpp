@@ -16,6 +16,7 @@ auto ParseNode<ShellTask>(YAML::Node node) -> ShellTask {
   std::vector<std::string> commands;
   std::vector<std::string> required_task_names;
   auto commands_nodes = node["commands"];
+  std::string help_message;
   for (YAML::const_iterator it = node.begin(); it != node.end(); ++it) {
     const auto key = it->first;
     const auto value = it->second;
@@ -28,17 +29,21 @@ auto ParseNode<ShellTask>(YAML::Node node) -> ShellTask {
       for (const auto& task_name : value) {
         required_task_names.push_back(task_name.as<std::string>());
       }
+    } else if (key.as<std::string>() == "help" && value.IsScalar()) {
+      auto value_str = value.as<std::string>();
+      help_message = value_str;
     }
   }
   if (commands.empty()) {
     throw std::runtime_error{"Shell task has no commands "};
   }
-  return ShellTask{"default", commands, required_task_names};
+  return ShellTask{"default", commands, help_message, required_task_names};
 }
 template <>
 auto ParseNode<LinkTask>(YAML::Node node) -> LinkTask {
   std::vector<std::pair<std::string, std::string>> links;
   bool force = false;
+  std::string help_message;
   for (YAML::const_iterator it = node.begin(); it != node.end(); ++it) {
     const auto key = it->first;
     const auto value = it->second;
@@ -54,12 +59,15 @@ auto ParseNode<LinkTask>(YAML::Node node) -> LinkTask {
           value_str.begin(), value_str.end(), value_str.begin(),
           [](unsigned char character) { return std::toupper(character); });
       force = (value_str == "TRUE");
+    } else if (key.as<std::string>() == "help" && value.IsScalar()) {
+      auto value_str = value.as<std::string>();
+      help_message = value_str;
     }
   }
   if (links.empty()) {
     throw std::runtime_error{"Link task has no links"};
   }
-  return LinkTask{"default", links, force};
+  return LinkTask{"default", links, force, help_message};
 }
 
 template <>

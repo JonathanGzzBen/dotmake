@@ -14,7 +14,7 @@ auto dotmake::Specification::RecursiveTasksFill(
       continue;
     }
     if (!RecursiveTasksFill(required_task, tasks, processed_tasks,
-                              result_queued_tasks)) {
+                            result_queued_tasks)) {
       return false;
     }
   }
@@ -42,5 +42,21 @@ auto dotmake::Specification::RecursiveTasksFill(
     queued_tasks.pop();
   }
 
+  return true;
+}
+
+[[nodiscard]] auto dotmake::Specification::PrintHelpMessageForTask(
+    const std::string& task_name) const -> bool {
+  if (tasks_.find(task_name) == tasks_.cend()) {
+    std::cerr << "There is no task with name \"" << task_name
+              << "\"  in specification file\n";
+    return false;
+  }
+  const auto task = tasks_.at(task_name);
+  if (task->GetHelpMessage().empty()) {
+    std::cerr << "Task \"" << task_name << "\" doesn't have a help message\n";
+    return false;
+  }
+  std::cout << tasks_.at(task_name)->GetHelpMessage() << "\n";
   return true;
 }

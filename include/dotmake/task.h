@@ -26,9 +26,12 @@ class Task {
  protected:
   std::string name_;
   std::vector<std::string> required_task_names_;
+  std::string help_message_;
 
   explicit Task(std::string name);
-  Task(std::string name, std::vector<std::string> required_task_names);
+  explicit Task(std::string name, std::string help_message);
+  Task(std::string name, std::string help_message,
+       std::vector<std::string> required_task_names);
 
  public:
   virtual ~Task();
@@ -50,6 +53,16 @@ class Task {
    * @return name of task
    */
   virtual auto SetName(const std::string& name) -> Task&;
+  /**
+   * @brief Gets the name of the task
+   * @return name of task
+   */
+  [[nodiscard]] virtual auto GetHelpMessage() const -> std::string;
+  /**
+   * @brief Gets the help message of the task
+   * @return help message of task
+   */
+  virtual auto SetHelpMessage(const std::string& help_mesage) -> Task&;
 };
 }  // namespace dotmake
 

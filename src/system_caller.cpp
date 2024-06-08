@@ -15,8 +15,7 @@ inline auto SystemCaller::CreateSymbolicLink(const std::string& link,
   return std::system(GetLinkCommand(link, target, force).c_str());
 }
 
-inline auto SystemCaller::GetRunShellCommand(const char* cmd)
-    -> std::string {
+inline auto SystemCaller::GetRunShellCommand(const char* cmd) -> std::string {
 #ifdef _WIN32
   return std::string("powershell ") + cmd;
 #else
@@ -25,8 +24,8 @@ inline auto SystemCaller::GetRunShellCommand(const char* cmd)
 }
 
 inline auto SystemCaller::GetLinkCommand(const std::string& link,
-                                           const std::string& target,
-                                           bool force) -> std::string {
+                                         const std::string& target, bool force)
+    -> std::string {
 #ifdef _WIN32
   std::filesystem::path target_path{target};
   std::string command =

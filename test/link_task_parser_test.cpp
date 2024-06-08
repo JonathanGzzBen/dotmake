@@ -67,3 +67,19 @@ TEST(LinkTaskParser, ParseShellTask) {
 
   )"));
 }
+
+TEST(LinkTaskParser, ParseWithHelpMessage) {
+  auto parsed_task = dotmake::yaml_parser::ParseString<dotmake::LinkTask>(R"(
+
+  type: link
+  links:
+    link.txt: target.txt
+  help: This task creates a symlink named link.txt which points to target.txt
+
+  )");
+
+  const std::string expected =
+      "This task creates a symlink named link.txt which points to target.txt";
+
+  EXPECT_EQ(parsed_task.GetHelpMessage(), expected);
+}
